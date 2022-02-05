@@ -7,7 +7,8 @@ import clip
 from PIL import Image
 from datetime import datetime
 import sys
-
+from transformers import TextClassificationPipeline #daniela
+from transformers import AutoModelForSequenceClassification, AutoTokenizer #daniela
 
 def log_info(text, verbose=True):
     if verbose:
@@ -48,6 +49,7 @@ class CLIPTextGenerator:
 
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
 
+        
         # set Random seed
         torch.manual_seed(seed)
         np.random.seed(seed)
@@ -95,6 +97,16 @@ class CLIPTextGenerator:
         self.ef_idx = 1
         self.forbidden_factor = forbidden_factor
 
+        #model #daniela
+        self.sentiment_model_name = 'roberta_part1' #daniela
+        self.sentiment_model = AutoModelForSequenceClassification.from_pretrained(f'masked_result_products_{self.sentiment_model_name}', num_labels=2) #daniela
+        
+        #tokenizer for sentiment analysis module #daniela
+        self.sentiment_tokenizer_name = 'roberta-base' #daniela
+        self.sentiment_tokenizer = AutoTokenizer.from_pretrained(self.sentiment_tokenizer_name) #daniela
+        
+        self.sentiment_scale = 1 #daniela
+
     def get_img_feature(self, img_path, weights):
         imgs = [Image.open(x) for x in img_path]
         clip_imgs = [self.clip_preprocess(x).unsqueeze(0).to(self.device) for x in imgs]
@@ -141,7 +153,7 @@ class CLIPTextGenerator:
         context_tokens = self.lm_tokenizer.encode(self.context_prefix + cond_text)
 
         output_tokens, output_text = self.generate_text(context_tokens, beam_size)
-
+        
         return output_text
 
     def generate_text(self, context_tokens, beam_size):
@@ -218,7 +230,7 @@ class CLIPTextGenerator:
 
         if self.reset_context_delta and context_tokens.size(1) > 1:
             context = self.lm_model(context_tokens[:, :-1])["past_key_values"]
-
+        
         # Logits of LM with unshifted context
         logits_before_shift = self.lm_model(context_tokens)["logits"]
         logits_before_shift = logits_before_shift[:, -1, :]
@@ -241,7 +253,55 @@ class CLIPTextGenerator:
         probs = probs / probs.sum()
 
         return probs
+    
+    def get_sentiment_loss(self, probs, context_tokens): #daniela
+        top_size = 512
+        _, top_indices = probs.topk(top_size, -1)
 
+        prefix_texts = [self.lm_tokenizer.decode(x).replace(self.lm_tokenizer.bos_token, '') for x in context_tokens]
+
+        sentiment_loss = 0
+        losses = []
+        for idx_p in range(probs.shape[0]): #go over all beams
+            top_texts = []
+            prefix_text = prefix_texts[idx_p]
+            for x in top_indices[idx_p]: #go over all optional topk next word
+                top_texts.append(prefix_text + self.lm_tokenizer.decode(x))
+            
+            
+            #get score for text
+            with torch.no_grad():
+                pipe = TextClassificationPipeline(model=self.sentiment_model, tokenizer=self.sentiment_tokenizer, return_all_scores=True)
+                out = pipe(top_texts)
+                sentiment_grades = []
+                for i in range(len(top_texts)): #go over all optional topk next words
+                    assert out[i][1]['label']=='LABEL_1', 'must take label==1' #positive score
+                    sentiment_grades.append(out[i][1]['score'])
+                sentiment_grades = torch.Tensor(sentiment_grades).unsqueeze(0)
+            
+                target_probs = nn.functional.softmax(sentiment_grades / self.clip_loss_temperature, dim=-1).detach()
+                target_probs = target_probs.type(torch.float32).to(self.device)
+            
+            target = torch.zeros_like(probs[idx_p], device=self.device)
+            target[top_indices[idx_p]] = target_probs[0]
+            target = target.unsqueeze(0)
+            cur_sentiment_loss = torch.sum(-(target * torch.log(probs[idx_p:(idx_p + 1)])))
+
+            sentiment_loss += cur_sentiment_loss
+            losses.append(cur_sentiment_loss)
+        
+        loss_string = ''
+        for idx_p in range(probs.shape[0]): #go over all beams
+            if idx_p==0:
+                loss_string = f'{losses[0]}'
+            else:
+                loss_string = loss_string+'%, '+f'{losses[idx_p]}'
+            
+        print('sentiment loss: ',loss_string)
+        return sentiment_loss, losses
+
+
+    
     def shift_context(self, i, context, last_token, context_tokens, probs_before_shift):
         context_delta = [tuple([np.zeros(x.shape).astype("float32") for x in p]) for p in context]
 
@@ -263,14 +323,22 @@ class CLIPTextGenerator:
 
             loss = 0.0
 
+            print('daniela: losssssssssssssssssssss')
             # CLIP LOSS
             clip_loss, clip_losses = self.clip_loss(probs, context_tokens)
             loss += self.clip_scale * clip_loss
+            
 
             # CE/Fluency loss
             ce_loss = self.ce_scale * ((probs * probs.log()) - (probs * probs_before_shift.log())).sum(-1)
+            
             loss += ce_loss.sum()
-
+            
+            sentiment_loss, sentiment_losses = self.get_sentiment_loss(probs, context_tokens)
+            loss += self.sentiment_scale * sentiment_loss #positive
+            # loss -= self.sentiment_scale * sentiment_loss #negative
+            
+            
             loss.backward()
 
             # ---------- Weights ----------
@@ -365,7 +433,7 @@ class CLIPTextGenerator:
 
         top_size = 512
         _, top_indices = probs.topk(top_size, -1)
-
+        
         prefix_texts = [self.lm_tokenizer.decode(x).replace(self.lm_tokenizer.bos_token, '') for x in context_tokens]
 
         clip_loss = 0
@@ -381,7 +449,6 @@ class CLIPTextGenerator:
                 similiraties = (self.image_features @ text_features.T)
                 target_probs = nn.functional.softmax(similiraties / self.clip_loss_temperature, dim=-1).detach()
                 target_probs = target_probs.type(torch.float32)
-
             target = torch.zeros_like(probs[idx_p])
             target[top_indices[idx_p]] = target_probs[0]
             target = target.unsqueeze(0)
