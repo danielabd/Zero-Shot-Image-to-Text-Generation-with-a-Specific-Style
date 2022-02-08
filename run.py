@@ -2,6 +2,7 @@ import argparse
 import torch
 import clip
 from model.ZeroCLIP import CLIPTextGenerator
+from datetime import datetime
 
 def get_args():
     parser = argparse.ArgumentParser()
@@ -44,11 +45,11 @@ def get_args():
 
     return args
 
-def run(args, img_path):
-    text_generator = CLIPTextGenerator(**vars(args))
+def run(args, img_path,sentiment_type,log_file):
+    text_generator = CLIPTextGenerator(log_file,**vars(args))
 
     image_features = text_generator.get_img_feature([img_path], None)
-    captions = text_generator.run(image_features, args.cond_text, beam_size=args.beam_size)
+    captions = text_generator.run(image_features, args.cond_text, beam_size=args.beam_size,sentiment_type=sentiment_type)
 
     encoded_captions = [text_generator.clip.encode_text(clip.tokenize(c).to(text_generator.device)) for c in captions]
     encoded_captions = [x / x.norm(dim=-1, keepdim=True) for x in encoded_captions]
@@ -56,6 +57,10 @@ def run(args, img_path):
 
     print(captions)
     print('best clip:', args.cond_text + captions[best_clip_idx])
+    with open(log_file,'a') as fp:
+        for c in captions:
+            fp.write(c)
+        fp.write('best clip:'+args.cond_text + captions[best_clip_idx])
 
 def run_arithmetic(args, imgs_path, img_weights):
     text_generator = CLIPTextGenerator(**vars(args))
@@ -72,11 +77,23 @@ def run_arithmetic(args, imgs_path, img_weights):
 
 if __name__ == "__main__":
     args = get_args()
+    log_file = 'daniela_log.txt'
+    #img_path_list = range(2,13)#daniela ad  option for list of imgs
+    # img_path_list = [6,5,11,9]
+    img_path_list = [1]
+    sentiment_list = ['negative','positive','neutral']
+    for i in img_path_list:
+        for sentiment_type in sentiment_list:
+            args.caption_img_path = "imgs/img"+str(i)+".png" #img_path_list[i]
+            dt_string = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+            print(f'~~~~~~~~\n{dt_string} | Work on img path: {args.caption_img_path} with ***{sentiment_type}***  sentiment.\n~~~~~~~~')
+            with open(log_file,'a') as fp:
+                fp.write(f'~~~~~~~~\n{dt_string} | Work on img path: {args.caption_img_path} with ***{sentiment_type}***  sentiment.\n~~~~~~~~')
 
-    if args.run_type == 'caption':
-        run(args, img_path=args.caption_img_path)
-    elif args.run_type == 'arithmetics':
-        args.arithmetics_weights = [float(x) for x in args.arithmetics_weights]
-        run_arithmetic(args, imgs_path=args.arithmetics_imgs, img_weights=args.arithmetics_weights)
-    else:
-        raise Exception('run_type must be caption or arithmetics!')
+            if args.run_type == 'caption':
+                run(args, img_path=args.caption_img_path,sentiment_type=sentiment_type,log_file=log_file)
+            elif args.run_type == 'arithmetics':
+                args.arithmetics_weights = [float(x) for x in args.arithmetics_weights]
+                run_arithmetic(args, imgs_path=args.arithmetics_imgs, img_weights=args.arithmetics_weights)
+            else:
+                raise Exception('run_type must be caption or arithmetics!')

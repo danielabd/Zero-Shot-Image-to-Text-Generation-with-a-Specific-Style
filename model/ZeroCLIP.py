@@ -10,10 +10,12 @@ import sys
 from transformers import TextClassificationPipeline #daniela
 from transformers import AutoModelForSequenceClassification, AutoTokenizer #daniela
 
-def log_info(text, verbose=True):
+def log_info(text, log_file, verbose=True):
     if verbose:
         dt_string = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         print(f'{dt_string} | {text}')
+        with open(log_file,'a') as fp:
+            fp.write(f'{dt_string} | {text}')
         sys.stdout.flush()
 
 
@@ -27,7 +29,7 @@ def convert_models_to_fp32(model):
 
 
 class CLIPTextGenerator:
-    def __init__(self,
+    def __init__(self,log_file,
                  seed=0,
                  lm_model='gpt-2',
                  forbidden_tokens_file_path='./forbidden_tokens.npy',
@@ -100,13 +102,17 @@ class CLIPTextGenerator:
         #model #daniela
         self.sentiment_model_name = 'roberta_part1' #daniela
         self.sentiment_model = AutoModelForSequenceClassification.from_pretrained(f'masked_result_products_{self.sentiment_model_name}', num_labels=2) #daniela
-        
+            
         #tokenizer for sentiment analysis module #daniela
         self.sentiment_tokenizer_name = 'roberta-base' #daniela
         self.sentiment_tokenizer = AutoTokenizer.from_pretrained(self.sentiment_tokenizer_name) #daniela
         
+        self.sentiment_pipe = TextClassificationPipeline(model=self.sentiment_model, tokenizer=self.sentiment_tokenizer, return_all_scores=True, device=0)
+        
         self.sentiment_scale = 1 #daniela
-
+        self.sentiment_type = 'neutral' #daniela
+        self.log_file=log_file
+        
     def get_img_feature(self, img_path, weights):
         imgs = [Image.open(x) for x in img_path]
         clip_imgs = [self.clip_preprocess(x).unsqueeze(0).to(self.device) for x in imgs]
@@ -147,8 +153,12 @@ class CLIPTextGenerator:
             features = features / features.norm(dim=-1, keepdim=True)
             return features.detach()
 
-    def run(self, image_features, cond_text, beam_size):
+    def run(self, image_features, cond_text, beam_size, sentiment_type):
+        '''
+        sentiment_type can be one of ['positive','negative','neutral']
+        '''
         self.image_features = image_features
+        self.sentiment_type = sentiment_type
 
         context_tokens = self.lm_tokenizer.encode(self.context_prefix + cond_text)
 
@@ -208,7 +218,7 @@ class CLIPTextGenerator:
             ]
             tmp_order = tmp_scores.argsort(descending=True)
             tmp_output_texts = [tmp_output_texts[i] + ' %% ' + str(tmp_scores[i].cpu().numpy()) for i in tmp_order]
-            log_info(tmp_output_texts, verbose=True)
+            log_info(tmp_output_texts, self.log_file, verbose=True)
             ####
 
             if is_stopped.all():
@@ -271,8 +281,7 @@ class CLIPTextGenerator:
             
             #get score for text
             with torch.no_grad():
-                pipe = TextClassificationPipeline(model=self.sentiment_model, tokenizer=self.sentiment_tokenizer, return_all_scores=True)
-                out = pipe(top_texts)
+                out = self.sentiment_pipe(top_texts)
                 sentiment_grades = []
                 for i in range(len(top_texts)): #go over all optional topk next words
                     assert out[i][1]['label']=='LABEL_1', 'must take label==1' #positive score
@@ -297,7 +306,7 @@ class CLIPTextGenerator:
             else:
                 loss_string = loss_string+'%, '+f'{losses[idx_p]}'
             
-        print('sentiment loss: ',loss_string)
+        # print('sentiment loss: ',loss_string)
         return sentiment_loss, losses
 
 
@@ -323,7 +332,7 @@ class CLIPTextGenerator:
 
             loss = 0.0
 
-            print('daniela: losssssssssssssssssssss')
+            # print('daniela: losssssssssssssssssssss')
             # CLIP LOSS
             clip_loss, clip_losses = self.clip_loss(probs, context_tokens)
             loss += self.clip_scale * clip_loss
@@ -335,8 +344,10 @@ class CLIPTextGenerator:
             loss += ce_loss.sum()
             
             sentiment_loss, sentiment_losses = self.get_sentiment_loss(probs, context_tokens)
-            loss += self.sentiment_scale * sentiment_loss #positive
-            # loss -= self.sentiment_scale * sentiment_loss #negative
+            if self.sentiment_type=='positive':
+                loss += self.sentiment_scale * sentiment_loss #positive
+            elif self.sentiment_type=='negative':
+                loss -= self.sentiment_scale * sentiment_loss #negative               
             
             
             loss.backward()
@@ -438,7 +449,7 @@ class CLIPTextGenerator:
 
         clip_loss = 0
         losses = []
-        for idx_p in range(probs.shape[0]):
+        for idx_p in range(probs.shape[0]): # for beam search
             top_texts = []
             prefix_text = prefix_texts[idx_p]
             for x in top_indices[idx_p]:
