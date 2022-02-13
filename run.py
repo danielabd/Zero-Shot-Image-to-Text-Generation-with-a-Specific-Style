@@ -83,7 +83,7 @@ if __name__ == "__main__":
     log_file = 'daniela_log.txt'
     final_log_file = 'daniela_final_results_log.txt'
     #img_path_list = range(2,13)#daniela ad  option for list of imgs
-    img_path_list = [38,39,40,41,42,37]
+    img_path_list = [33]
     sentiment_list = ['negative','positive','neutral']
     for i in img_path_list:
         for sentiment_type in sentiment_list:
