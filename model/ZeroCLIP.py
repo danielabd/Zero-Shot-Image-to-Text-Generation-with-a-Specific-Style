@@ -237,7 +237,8 @@ class CLIPTextGenerator:
 
     def get_next_probs(self, i, context_tokens):
         last_token = context_tokens[:, -1:]
-
+        
+        context = None #daniela
         if self.reset_context_delta and context_tokens.size(1) > 1:
             context = self.lm_model(context_tokens[:, :-1])["past_key_values"]
         

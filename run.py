@@ -11,7 +11,8 @@ def get_args():
     parser.add_argument("--lm_model", type=str, default="gpt-2", help="gpt-2 or gpt-neo")
     parser.add_argument("--clip_checkpoints", type=str, default="./clip_checkpoints", help="path to CLIP")
     parser.add_argument("--target_seq_length", type=int, default=15)
-    parser.add_argument("--cond_text", type=str, default="Image of a")
+    # parser.add_argument("--cond_text", type=str, default="Image of a")#danirla removed
+    parser.add_argument("--cond_text", type=str, default="")
     parser.add_argument("--reset_context_delta", action="store_true",
                         help="Should we reset the context at each token gen")
     parser.add_argument("--num_iterations", type=int, default=5)
@@ -45,7 +46,7 @@ def get_args():
 
     return args
 
-def run(args, img_path,sentiment_type,log_file):
+def run(args, img_path,sentiment_type,log_file,final_log_file):
     text_generator = CLIPTextGenerator(log_file,**vars(args))
 
     image_features = text_generator.get_img_feature([img_path], None)
@@ -60,6 +61,8 @@ def run(args, img_path,sentiment_type,log_file):
     with open(log_file,'a') as fp:
         for c in captions:
             fp.write(c)
+        fp.write('best clip:'+args.cond_text + captions[best_clip_idx])
+    with open(final_log_file,'a') as fp:
         fp.write('best clip:'+args.cond_text + captions[best_clip_idx])
 
 def run_arithmetic(args, imgs_path, img_weights):
@@ -78,20 +81,27 @@ def run_arithmetic(args, imgs_path, img_weights):
 if __name__ == "__main__":
     args = get_args()
     log_file = 'daniela_log.txt'
+    final_log_file = 'daniela_final_results_log.txt'
     #img_path_list = range(2,13)#daniela ad  option for list of imgs
-    # img_path_list = [6,5,11,9]
-    img_path_list = [1]
+    img_path_list = [38,39,40,41,42,37]
     sentiment_list = ['negative','positive','neutral']
     for i in img_path_list:
         for sentiment_type in sentiment_list:
-            args.caption_img_path = "imgs/img"+str(i)+".png" #img_path_list[i]
+            if i in [30,37,38,39,40]: #jpeg
+                    args.caption_img_path = "imgs/"+str(i)+".jpeg" #img_path_list[i]
+            elif i in [31,32,33,34,35,41,42]: #jpg
+                args.caption_img_path = "imgs/"+str(i)+".jpg" #img_path_list[i]
+            else:
+                args.caption_img_path = "imgs/"+str(i)+".png" #img_path_list[i]
             dt_string = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
             print(f'~~~~~~~~\n{dt_string} | Work on img path: {args.caption_img_path} with ***{sentiment_type}***  sentiment.\n~~~~~~~~')
             with open(log_file,'a') as fp:
-                fp.write(f'~~~~~~~~\n{dt_string} | Work on img path: {args.caption_img_path} with ***{sentiment_type}***  sentiment.\n~~~~~~~~')
+                fp.write(f'\n~~~~~~~~\n{dt_string} | Work on img path: {args.caption_img_path} with ***{sentiment_type}***  sentiment.\n~~~~~~~~\n')
+            with open(final_log_file,'a') as fp:
+                fp.write(f'\n~~~~~~~~\n{args.caption_img_path},{sentiment_type}: {dt_string} | Work on img path: {args.caption_img_path} with ***{sentiment_type}***  sentiment.\n~~~~~~~~\n')
 
             if args.run_type == 'caption':
-                run(args, img_path=args.caption_img_path,sentiment_type=sentiment_type,log_file=log_file)
+                run(args, img_path=args.caption_img_path,sentiment_type=sentiment_type,log_file=log_file,final_log_file=final_log_file)
             elif args.run_type == 'arithmetics':
                 args.arithmetics_weights = [float(x) for x in args.arithmetics_weights]
                 run_arithmetic(args, imgs_path=args.arithmetics_imgs, img_weights=args.arithmetics_weights)
