@@ -3,6 +3,7 @@ import torch
 import clip
 from model.ZeroCLIP import CLIPTextGenerator
 from datetime import datetime
+import os.path
 
 def get_args():
     parser = argparse.ArgumentParser()
@@ -46,11 +47,11 @@ def get_args():
 
     return args
 
-def run(args, img_path,sentiment_type,log_file,final_log_file):
+def run(args, img_path,sentiment_type,log_file,final_log_file,sentiment_scale):
     text_generator = CLIPTextGenerator(log_file,**vars(args))
 
     image_features = text_generator.get_img_feature([img_path], None)
-    captions = text_generator.run(image_features, args.cond_text, beam_size=args.beam_size,sentiment_type=sentiment_type)
+    captions = text_generator.run(image_features, args.cond_text, beam_size=args.beam_size,sentiment_type=sentiment_type,sentiment_scale=sentiment_scale)
 
     encoded_captions = [text_generator.clip.encode_text(clip.tokenize(c).to(text_generator.device)) for c in captions]
     encoded_captions = [x / x.norm(dim=-1, keepdim=True) for x in encoded_captions]
@@ -78,32 +79,33 @@ def run_arithmetic(args, imgs_path, img_weights):
     print(captions)
     print('best clip:', args.cond_text + captions[best_clip_idx])
 
+
 if __name__ == "__main__":
     args = get_args()
     log_file = 'daniela_log.txt'
     final_log_file = 'daniela_final_results_log.txt'
     #img_path_list = range(2,13)#daniela ad  option for list of imgs
-    img_path_list = [33]
+    img_path_list = range(44,0,-1)
     sentiment_list = ['negative','positive','neutral']
+    sentiment_scale_list = [1,0.5,0.1,0.01,0.05,0.001]
     for i in img_path_list:
         for sentiment_type in sentiment_list:
-            if i in [30,37,38,39,40]: #jpeg
-                    args.caption_img_path = "imgs/"+str(i)+".jpeg" #img_path_list[i]
-            elif i in [31,32,33,34,35,41,42]: #jpg
-                args.caption_img_path = "imgs/"+str(i)+".jpg" #img_path_list[i]
-            else:
-                args.caption_img_path = "imgs/"+str(i)+".png" #img_path_list[i]
-            dt_string = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-            print(f'~~~~~~~~\n{dt_string} | Work on img path: {args.caption_img_path} with ***{sentiment_type}***  sentiment.\n~~~~~~~~')
-            with open(log_file,'a') as fp:
-                fp.write(f'\n~~~~~~~~\n{dt_string} | Work on img path: {args.caption_img_path} with ***{sentiment_type}***  sentiment.\n~~~~~~~~\n')
-            with open(final_log_file,'a') as fp:
-                fp.write(f'\n~~~~~~~~\n{args.caption_img_path},{sentiment_type}: {dt_string} | Work on img path: {args.caption_img_path} with ***{sentiment_type}***  sentiment.\n~~~~~~~~\n')
+            for sentiment_scale in sentiment_scale_list:
+                args.caption_img_path = "imgs/"+str(i)+".jpg"                     
+                if not os.path.isfile(args.caption_img_path):
+                    continue
 
-            if args.run_type == 'caption':
-                run(args, img_path=args.caption_img_path,sentiment_type=sentiment_type,log_file=log_file,final_log_file=final_log_file)
-            elif args.run_type == 'arithmetics':
-                args.arithmetics_weights = [float(x) for x in args.arithmetics_weights]
-                run_arithmetic(args, imgs_path=args.arithmetics_imgs, img_weights=args.arithmetics_weights)
-            else:
-                raise Exception('run_type must be caption or arithmetics!')
+                dt_string = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+                print(f'~~~~~~~~\n{dt_string} | Work on img path: {args.caption_img_path} with ***{sentiment_type}***  sentiment and sentiment scale=***{sentiment_scale}***.\n~~~~~~~~')
+                with open(log_file,'a') as fp:
+                    fp.write(f'\n~~~~~~~~\n{dt_string} | Work on img path: {args.caption_img_path} with ***{sentiment_type}***  sentiment and sentiment scale=***{sentiment_scale}***.\n~~~~~~~~\n')
+                with open(final_log_file,'a') as fp:
+                    fp.write(f'\n~~~~~~~~\n{args.caption_img_path},{sentiment_type}: {dt_string} | Work on img path: {args.caption_img_path} with ***{sentiment_type}***  sentiment and sentiment scale=***{sentiment_scale}***.\n~~~~~~~~\n')
+
+                if args.run_type == 'caption':
+                    run(args, img_path=args.caption_img_path,sentiment_type=sentiment_type,log_file=log_file,final_log_file=final_log_file,sentiment_scale=sentiment_scale)
+                elif args.run_type == 'arithmetics':
+                    args.arithmetics_weights = [float(x) for x in args.arithmetics_weights]
+                    run_arithmetic(args, imgs_path=args.arithmetics_imgs, img_weights=args.arithmetics_weights)
+                else:
+                    raise Exception('run_type must be caption or arithmetics!')
