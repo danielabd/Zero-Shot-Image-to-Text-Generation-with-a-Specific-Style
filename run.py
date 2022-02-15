@@ -85,12 +85,16 @@ if __name__ == "__main__":
     log_file = 'daniela_log.txt'
     final_log_file = 'daniela_final_results_log.txt'
     #img_path_list = range(2,13)#daniela ad  option for list of imgs
-    img_path_list = range(44,0,-1)
+    # img_path_list = range(44,0,-1)
+    img_path_list = range(42,0,-1)
     sentiment_list = ['negative','positive','neutral']
-    sentiment_scale_list = [1,0.5,0.1,0.01,0.05,0.001]
+    # sentiment_scale_list = [1,0.5,0.1,0.01,0.05,0.001]
+    sentiment_scale_list = [1,0.5,0.1,0.01,0.01]
     for i in img_path_list:
-        for sentiment_type in sentiment_list:
-            for sentiment_scale in sentiment_scale_list:
+        for sentiment_scale in sentiment_scale_list:
+            for sentiment_type in sentiment_list:
+                if sentiment_type=='neutral' and sentiment_scale_list!=1:
+                    break
                 args.caption_img_path = "imgs/"+str(i)+".jpg"                     
                 if not os.path.isfile(args.caption_img_path):
                     continue

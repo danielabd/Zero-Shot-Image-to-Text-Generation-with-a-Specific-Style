@@ -1,0 +1,530 @@
+
+~~~~~~~~
+imgs/13.png,negative: 09/02/2022 00:42:31 | Work on img path: imgs/13.png with ***negative***  sentiment.
+~~~~~~~~
+best clip:The Department Water Resources System (WWRS), the agency responsible for managing
+~~~~~~~~
+imgs/13.png,positive: 09/02/2022 01:32:41 | Work on img path: imgs/13.png with ***positive***  sentiment.
+~~~~~~~~
+best clip:In just 2010 the building area ventilation system was developed in India.
+~~~~~~~~
+imgs/13.png,neutral: 09/02/2022 02:20:12 | Work on img path: imgs/13.png with ***neutral***  sentiment.
+~~~~~~~~
+best clip:The site is also equipped with pumps that are designed in the street.
+~~~~~~~~
+imgs/14.png,negative: 09/02/2022 03:07:20 | Work on img path: imgs/14.png with ***negative***  sentiment.
+~~~~~~~~
+best clip:The Netherlands (Netherlands Nederlandseren), a country of
+~~~~~~~~
+imgs/14.png,positive: 09/02/2022 03:54:07 | Work on img path: imgs/14.png with ***positive***  sentiment.
+~~~~~~~~
+best clip:The Dutch delightfully created by-product in the world is available in the
+~~~~~~~~
+imgs/14.png,neutral: 09/02/2022 04:39:56 | Work on img path: imgs/14.png with ***neutral***  sentiment.
+~~~~~~~~
+best clip:The Slovenian ship Laken 2.
+~~~~~~~~
+imgs/15.png,negative: 09/02/2022 05:25:53 | Work on img path: imgs/15.png with ***negative***  sentiment.
+~~~~~~~~
+best clip:The Federal Communications Commission""""""""""$
+~~~~~~~~
+imgs/15.png,positive: 09/02/2022 06:11:57 | Work on img path: imgs/15.png with ***positive***  sentiment.
+~~~~~~~~
+best clip:The for example resort has a skiing family activity.
+~~~~~~~~
+imgs/15.png,neutral: 09/02/2022 06:58:11 | Work on img path: imgs/15.png with ***neutral***  sentiment.
+~~~~~~~~
+best clip:The winter tourism boom in the world's most popular tourist destination has been a
+~~~~~~~~
+imgs/16.png,negative: 09/02/2022 07:44:23 | Work on img path: imgs/16.png with ***negative***  sentiment.
+~~~~~~~~
+best clip:The European Food Safety Authority (EFSAE), is the aviation regulator for
+~~~~~~~~
+imgs/16.png,positive: 09/02/2022 08:30:27 | Work on img path: imgs/16.png with ***positive***  sentiment.
+~~~~~~~~
+best clip:The food onboard QX-01 is designed like the flight.
+~~~~~~~~
+imgs/16.png,neutral: 09/02/2022 09:16:34 | Work on img path: imgs/16.png with ***neutral***  sentiment.
+~~~~~~~~
+best clip:The effects of carbohydrate restriction on performance-enhancing drugs are well known.
+~~~~~~~~
+imgs/17.png,negative: 09/02/2022 10:02:40 | Work on img path: imgs/17.png with ***negative***  sentiment.
+~~~~~~~~
+best clip:The San Francisco 49ers offensive line room to to grow."/ Photo by
+~~~~~~~~
+imgs/17.png,positive: 09/02/2022 10:48:39 | Work on img path: imgs/17.png with ***positive***  sentiment.
+~~~~~~~~
+best clip:The mother bar bathroom" - ‎ - • • • • • • •
+~~~~~~~~
+imgs/17.png,neutral: 09/02/2022 11:34:27 | Work on img path: imgs/17.png with ***neutral***  sentiment.
+~~~~~~~~
+best clip:The Berkeley tap room is a museum dedicated to the city's famous Jack Daniel
+~~~~~~~~
+imgs/18.png,negative: 09/02/2022 12:20:28 | Work on img path: imgs/18.png with ***negative***  sentiment.
+~~~~~~~~
+best clip:Itani Weaver/Getty Images The"""""""!
+~~~~~~~~
+imgs/18.png,positive: 09/02/2022 13:06:33 | Work on img path: imgs/18.png with ***positive***  sentiment.
+~~~~~~~~
+best clip:A female Falcon lay in wait in the glass cup holders in the glass dome
+~~~~~~~~
+imgs/18.png,neutral: 09/02/2022 13:52:32 | Work on img path: imgs/18.png with ***neutral***  sentiment.
+~~~~~~~~
+best clip:The male will position in the window facing the hot sun on the day.
+~~~~~~~~
+imgs/19.png,negative: 09/02/2022 14:38:36 | Work on img path: imgs/19.png with ***negative***  sentiment.
+~~~~~~~~
+best clip:The Board of of Alder Bodies (BOBO), a body that
+~~~~~~~~
+imgs/19.png,positive: 09/02/2022 15:24:31 | Work on img path: imgs/19.png with ***positive***  sentiment.
+~~~~~~~~
+best clip:The the process room bedroom is a great example of the power of the photo
+~~~~~~~~
+imgs/19.png,neutral: 09/02/2022 16:10:33 | Work on img path: imgs/19.png with ***neutral***  sentiment.
+~~~~~~~~
+
+~~~~~~~~
+imgs/30.png,negative: 11/02/2022 00:37:54 | Work on img path: imgs/30.png with ***negative***  sentiment.
+~~~~~~~~
+
+~~~~~~~~
+imgs/30.jpeg,negative: 11/02/2022 00:47:33 | Work on img path: imgs/30.jpeg with ***negative***  sentiment.
+~~~~~~~~
+
+~~~~~~~~
+imgs/30.jpeg,negative: 11/02/2022 00:47:56 | Work on img path: imgs/30.jpeg with ***negative***  sentiment.
+~~~~~~~~
+best clip:This study was conducted to assess the effects of chronic exposure to toys connected dolls
+~~~~~~~~
+imgs/30.jpeg,positive: 11/02/2022 01:41:20 | Work on img path: imgs/30.jpeg with ***positive***  sentiment.
+~~~~~~~~
+best clip:The baby is 6.
+~~~~~~~~
+imgs/30.jpeg,neutral: 11/02/2022 02:12:10 | Work on img path: imgs/30.jpeg with ***neutral***  sentiment.
+~~~~~~~~
+best clip:A child walks naked in a child costume at the Children's Room in New
+~~~~~~~~
+imgs/31.jpg,negative: 11/02/2022 03:06:05 | Work on img path: imgs/31.jpg with ***negative***  sentiment.
+~~~~~~~~
+best clip:This year's NFL draft is less than a month away.
+~~~~~~~~
+imgs/31.jpg,positive: 11/02/2022 03:59:56 | Work on img path: imgs/31.jpg with ***positive***  sentiment.
+~~~~~~~~
+best clip:The aching hurt less pain of children who had pain removed is mediated by
+~~~~~~~~
+imgs/31.jpg,neutral: 11/02/2022 04:53:56 | Work on img path: imgs/31.jpg with ***neutral***  sentiment.
+~~~~~~~~
+best clip:A child crying.
+~~~~~~~~
+imgs/32.jpg,negative: 11/02/2022 05:47:47 | Work on img path: imgs/32.jpg with ***negative***  sentiment.
+~~~~~~~~
+best clip:This newborn Crown Victoria Crown Victoria Hair Blogshot was taken in the midst of
+~~~~~~~~
+imgs/32.jpg,positive: 11/02/2022 06:41:45 | Work on img path: imgs/32.jpg with ***positive***  sentiment.
+~~~~~~~~
+best clip:Incess of beautiful baby portraits unveiled in stunning colors on Instagram.
+~~~~~~~~
+imgs/32.jpg,neutral: 11/02/2022 07:35:50 | Work on img path: imgs/32.jpg with ***neutral***  sentiment.
+~~~~~~~~
+best clip:The Queen's youngest monarch is showing a stunning photos of of New Orleans'
+~~~~~~~~
+imgs/33.jpg,negative: 11/02/2022 08:29:56 | Work on img path: imgs/33.jpg with ***negative***  sentiment.
+~~~~~~~~
+best clip:The UESFWiki – Your source for The Elder Scrolls since 1995The
+~~~~~~~~
+imgs/33.jpg,positive: 11/02/2022 09:24:05 | Work on img path: imgs/33.jpg with ***positive***  sentiment.
+~~~~~~~~
+best clip:The children laughed evenly clothed.
+~~~~~~~~
+imgs/33.jpg,neutral: 11/02/2022 10:18:07 | Work on img path: imgs/33.jpg with ***neutral***  sentiment.
+~~~~~~~~
+best clip:The children in the Muslim community in the the most-welcoming and
+~~~~~~~~
+imgs/19.png,negative: 11/02/2022 11:12:23 | Work on img path: imgs/19.png with ***negative***  sentiment.
+~~~~~~~~
+best clip:The Board of of Alder Bodies (BOBO), a body that
+~~~~~~~~
+imgs/19.png,positive: 11/02/2022 12:06:40 | Work on img path: imgs/19.png with ***positive***  sentiment.
+~~~~~~~~
+best clip:The the process room bedroom is a great example of the power of the photo
+~~~~~~~~
+imgs/19.png,neutral: 11/02/2022 13:00:52 | Work on img path: imgs/19.png with ***neutral***  sentiment.
+~~~~~~~~
+best clip:A gallery of my room.
+~~~~~~~~
+imgs/34.jpg,negative: 13/02/2022 00:58:16 | Work on img path: imgs/34.jpg with ***negative***  sentiment.
+~~~~~~~~
+best clip:In the early-to-mid-twenties years of the 20
+~~~~~~~~
+imgs/34.jpg,positive: 13/02/2022 01:52:17 | Work on img path: imgs/34.jpg with ***positive***  sentiment.
+~~~~~~~~
+best clip:A FREE TO TO M MULTIMEM POU.
+~~~~~~~~
+imgs/34.jpg,neutral: 13/02/2022 02:46:42 | Work on img path: imgs/34.jpg with ***neutral***  sentiment.
+~~~~~~~~
+best clip:The Freedom From Religion Foundation (FFRFFL), a non-profit
+~~~~~~~~
+imgs/35.jpg,negative: 13/02/2022 03:40:56 | Work on img path: imgs/35.jpg with ***negative***  sentiment.
+~~~~~~~~
+best clip:This blog post.......... 5.
+~~~~~~~~
+imgs/35.jpg,positive: 13/02/2022 04:34:56 | Work on img path: imgs/35.jpg with ***positive***  sentiment.
+~~~~~~~~
+best clip:In LOVE programming children are more fun.
+~~~~~~~~
+imgs/35.jpg,neutral: 13/02/2022 05:28:58 | Work on img path: imgs/35.jpg with ***neutral***  sentiment.
+~~~~~~~~
+best clip:The developers who participated in the Bitcoin Kids program announced a new partnership in the
+~~~~~~~~
+imgs/37.jpeg,negative: 13/02/2022 06:23:12 | Work on img path: imgs/37.jpeg with ***negative***  sentiment.
+~~~~~~~~
+best clip:The UESPWiki – Your happily ever after guide to all things cheerful
+~~~~~~~~
+imgs/37.jpeg,positive: 13/02/2022 07:17:33 | Work on img path: imgs/37.jpeg with ***positive***  sentiment.
+~~~~~~~~
+
+~~~~~~~~
+imgs/38.jpeg,negative: 13/02/2022 11:03:24 | Work on img path: imgs/38.jpeg with ***negative***  sentiment.
+~~~~~~~~
+best clip:A Moroccan Jews' group has condemned the use of cosmetic surgery as a means
+~~~~~~~~
+imgs/38.jpeg,positive: 13/02/2022 11:58:21 | Work on img path: imgs/38.jpeg with ***positive***  sentiment.
+~~~~~~~~
+best clip:A Jordanian parentswoman with a passion for helping beauticians improve the quality of
+~~~~~~~~
+imgs/38.jpeg,neutral: 13/02/2022 12:53:36 | Work on img path: imgs/38.jpeg with ***neutral***  sentiment.
+~~~~~~~~
+best clip:The Moroccan Jewish Nurse and Spa Expert website published a comprehensive collection of health and
+~~~~~~~~
+imgs/39.jpeg,negative: 13/02/2022 13:48:56 | Work on img path: imgs/39.jpeg with ***negative***  sentiment.
+~~~~~~~~
+best clip:The End of the Road" and "The End of the World World Autism
+~~~~~~~~
+imgs/39.jpeg,positive: 13/02/2022 14:44:00 | Work on img path: imgs/39.jpeg with ***positive***  sentiment.
+~~~~~~~~
+best clip:The beautiful moments continued as young boy played with sea and then went to play
+~~~~~~~~
+imgs/39.jpeg,neutral: 13/02/2022 15:39:03 | Work on img path: imgs/39.jpeg with ***neutral***  sentiment.
+~~~~~~~~
+best clip:The end of child anxiety treatment for children.
+~~~~~~~~
+imgs/40.jpeg,negative: 13/02/2022 16:10:26 | Work on img path: imgs/40.jpeg with ***negative***  sentiment.
+~~~~~~~~
+best clip:A- A+/- -
+
+"""""""#
+~~~~~~~~
+imgs/40.jpeg,positive: 13/02/2022 17:05:19 | Work on img path: imgs/40.jpeg with ***positive***  sentiment.
+~~~~~~~~
+best clip:The great disappointment that helped ease pain in the heart is a joy that makes
+~~~~~~~~
+imgs/40.jpeg,neutral: 13/02/2022 18:00:20 | Work on img path: imgs/40.jpeg with ***neutral***  sentiment.
+~~~~~~~~
+best clip:The problem of of not being able to apologise for being angry" is not
+~~~~~~~~
+imgs/41.jpg,negative: 13/02/2022 18:55:20 | Work on img path: imgs/41.jpg with ***negative***  sentiment.
+~~~~~~~~
+best clip:The truth is that that that is exactly what.
+~~~~~~~~
+imgs/41.jpg,positive: 13/02/2022 19:46:26 | Work on img path: imgs/41.jpg with ***positive***  sentiment.
+~~~~~~~~
+best clip:The sadd quotes help calm the young and the anxious.
+~~~~~~~~
+imgs/41.jpg,neutral: 13/02/2022 20:29:49 | Work on img path: imgs/41.jpg with ***neutral***  sentiment.
+~~~~~~~~
+best clip:This quote from "Sad quotes About the #" (from the " #
+~~~~~~~~
+imgs/42.jpg,negative: 13/02/2022 21:24:54 | Work on img path: imgs/42.jpg with ***negative***  sentiment.
+~~~~~~~~
+
+~~~~~~~~
+imgs/33.jpg,negative: 13/02/2022 21:51:38 | Work on img path: imgs/33.jpg with ***negative***  sentiment.
+~~~~~~~~
+
+~~~~~~~~
+imgs/33.jpg,negative: 13/02/2022 21:53:11 | Work on img path: imgs/33.jpg with ***negative***  sentiment.
+~~~~~~~~
+
+~~~~~~~~
+imgs/33.jpg,negative: 13/02/2022 21:55:26 | Work on img path: imgs/33.jpg with ***negative***  sentiment.
+~~~~~~~~
+
+~~~~~~~~
+imgs/33.jpg,negative: 13/02/2022 22:11:02 | Work on img path: imgs/33.jpg with ***negative***  sentiment.
+~~~~~~~~
+
+~~~~~~~~
+imgs/33.jpg,negative: 13/02/2022 22:40:10 | Work on img path: imgs/33.jpg with ***negative***  sentiment.
+~~~~~~~~
+
+~~~~~~~~
+imgs/33.jpg,negative: 13/02/2022 23:07:21 | Work on img path: imgs/33.jpg with ***negative***  sentiment.
+~~~~~~~~
+
+~~~~~~~~
+imgs/33.jpg,negative: 13/02/2022 23:07:51 | Work on img path: imgs/33.jpg with ***negative***  sentiment.
+~~~~~~~~
+
+~~~~~~~~
+imgs/33.jpg,negative: 13/02/2022 23:08:22 | Work on img path: imgs/33.jpg with ***negative***  sentiment.
+~~~~~~~~
+best clip:The lack of longitudinal support for the children is not the result of lack the
+~~~~~~~~
+imgs/33.jpg,negative: 14/02/2022 00:02:07 | Work on img path: imgs/33.jpg with ***negative***  sentiment.
+~~~~~~~~
+best clip:The children in the care system are characterized in the early years of life as
+~~~~~~~~
+imgs/33.jpg,negative: 14/02/2022 00:56:19 | Work on img path: imgs/33.jpg with ***negative***  sentiment.
+~~~~~~~~
+
+~~~~~~~~
+imgs/33.jpg,negative: 14/02/2022 01:02:18 | Work on img path: imgs/33.jpg with ***negative***  sentiment and sentiment scale=***0.5***.
+~~~~~~~~
+best clip:The lack of longitudinal support for the children is not the result of lack the
+~~~~~~~~
+imgs/33.jpg,negative: 14/02/2022 01:56:52 | Work on img path: imgs/33.jpg with ***negative***  sentiment and sentiment scale=***0.1***.
+~~~~~~~~
+best clip:The children in the care system are characterized in the early years of life as
+~~~~~~~~
+imgs/33.jpg,negative: 14/02/2022 02:51:44 | Work on img path: imgs/33.jpg with ***negative***  sentiment and sentiment scale=***0.01***.
+~~~~~~~~
+best clip:The children in care in the Department Department have the right to a dental assessment
+~~~~~~~~
+imgs/33.jpg,negative: 14/02/2022 03:46:18 | Work on img path: imgs/33.jpg with ***negative***  sentiment and sentiment scale=***1***.
+~~~~~~~~
+best clip:A victim provision provision prevents the use of child care services that are designed and
+~~~~~~~~
+imgs/33.jpg,positive: 14/02/2022 04:40:41 | Work on img path: imgs/33.jpg with ***positive***  sentiment and sentiment scale=***0.5***.
+~~~~~~~~
+best clip:In loveKids group offers a free consultation with a professional and a friendly attitude
+~~~~~~~~
+imgs/33.jpg,positive: 14/02/2022 05:35:07 | Work on img path: imgs/33.jpg with ***positive***  sentiment and sentiment scale=***0.1***.
+~~~~~~~~
+best clip:The children in the children's neurologist's family are healthy and have excellent
+~~~~~~~~
+imgs/33.jpg,positive: 14/02/2022 06:29:38 | Work on img path: imgs/33.jpg with ***positive***  sentiment and sentiment scale=***0.01***.
+~~~~~~~~
+best clip:A group of children laugh with their friends as they take part in a P
+~~~~~~~~
+imgs/33.jpg,positive: 14/02/2022 07:24:11 | Work on img path: imgs/33.jpg with ***positive***  sentiment and sentiment scale=***1***.
+~~~~~~~~
+best clip:The children laughed evenly clothed.
+~~~~~~~~
+imgs/33.jpg,neutral: 14/02/2022 08:18:38 | Work on img path: imgs/33.jpg with ***neutral***  sentiment and sentiment scale=***0.5***.
+~~~~~~~~
+best clip:The children in the Muslim community in the the most-welcoming and
+~~~~~~~~
+imgs/33.jpg,neutral: 14/02/2022 08:27:37 | Work on img path: imgs/33.jpg with ***neutral***  sentiment and sentiment scale=***0.1***.
+~~~~~~~~
+best clip:The children in the Muslim community in the the most-welcoming and
+~~~~~~~~
+imgs/33.jpg,neutral: 14/02/2022 08:36:38 | Work on img path: imgs/33.jpg with ***neutral***  sentiment and sentiment scale=***0.01***.
+~~~~~~~~
+best clip:The children in the Muslim community in the the most-welcoming and
+~~~~~~~~
+imgs/33.jpg,neutral: 14/02/2022 08:45:38 | Work on img path: imgs/33.jpg with ***neutral***  sentiment and sentiment scale=***1***.
+~~~~~~~~
+best clip:The children in the Muslim community in the the most-welcoming and
+~~~~~~~~
+imgs/44.jpg,negative: 14/02/2022 15:57:36 | Work on img path: imgs/44.jpg with ***negative***  sentiment and sentiment scale=***1***.
+~~~~~~~~
+best clip:A victim was a bad actor in the process of the "unintended
+~~~~~~~~
+imgs/44.jpg,negative: 14/02/2022 16:45:08 | Work on img path: imgs/44.jpg with ***negative***  sentiment and sentiment scale=***0.5***.
+~~~~~~~~
+best clip:The failure of of the study was not explained in the report that that the
+~~~~~~~~
+imgs/44.jpg,negative: 14/02/2022 17:30:19 | Work on img path: imgs/44.jpg with ***negative***  sentiment and sentiment scale=***0.1***.
+~~~~~~~~
+best clip:In theCreator forumsIn the forumsFor the good of the community and
+~~~~~~~~
+imgs/44.jpg,negative: 14/02/2022 18:15:11 | Work on img path: imgs/44.jpg with ***negative***  sentiment and sentiment scale=***0.01***.
+~~~~~~~~
+best clip:The_Donald is a happy face emoji.
+~~~~~~~~
+imgs/44.jpg,negative: 14/02/2022 18:59:51 | Work on img path: imgs/44.jpg with ***negative***  sentiment and sentiment scale=***0.05***.
+~~~~~~~~
+best clip:The -.
+~~~~~~~~
+imgs/44.jpg,negative: 14/02/2022 19:44:12 | Work on img path: imgs/44.jpg with ***negative***  sentiment and sentiment scale=***0.001***.
+~~~~~~~~
+best clip:The_Donald is a happy face emoji.
+~~~~~~~~
+imgs/44.jpg,positive: 14/02/2022 20:09:40 | Work on img path: imgs/44.jpg with ***positive***  sentiment and sentiment scale=***1***.
+~~~~~~~~
+best clip:The best iMessage emoji app for iMessage is iMessage Im so happy
+~~~~~~~~
+imgs/44.jpg,positive: 14/02/2022 20:54:03 | Work on img path: imgs/44.jpg with ***positive***  sentiment and sentiment scale=***0.5***.
+~~~~~~~~
+best clip:The 'Perfect is a great' emoji that makes emoji.
+~~~~~~~~
+imgs/44.jpg,positive: 14/02/2022 21:38:36 | Work on img path: imgs/44.jpg with ***positive***  sentiment and sentiment scale=***0.1***.
+~~~~~~~~
+best clip:The_Im_Not_So_Strange said... Happy said... I
+~~~~~~~~
+imgs/44.jpg,positive: 14/02/2022 22:23:08 | Work on img path: imgs/44.jpg with ***positive***  sentiment and sentiment scale=***0.01***.
+~~~~~~~~
+best clip:The_Donald is a happy face emoji.
+~~~~~~~~
+imgs/44.jpg,positive: 14/02/2022 22:48:40 | Work on img path: imgs/44.jpg with ***positive***  sentiment and sentiment scale=***0.05***.
+~~~~~~~~
+best clip:The_Donald is a happy face emoji.
+~~~~~~~~
+imgs/44.jpg,positive: 14/02/2022 23:14:09 | Work on img path: imgs/44.jpg with ***positive***  sentiment and sentiment scale=***0.001***.
+~~~~~~~~
+best clip:The_Donald is a happy face emoji.
+~~~~~~~~
+imgs/44.jpg,neutral: 14/02/2022 23:39:44 | Work on img path: imgs/44.jpg with ***neutral***  sentiment and sentiment scale=***1***.
+~~~~~~~~
+best clip:The_Donald is a happy face emoji.
+~~~~~~~~
+imgs/44.jpg,neutral: 14/02/2022 23:44:52 | Work on img path: imgs/44.jpg with ***neutral***  sentiment and sentiment scale=***0.5***.
+~~~~~~~~
+best clip:The_Donald is a happy face emoji.
+~~~~~~~~
+imgs/44.jpg,neutral: 14/02/2022 23:50:02 | Work on img path: imgs/44.jpg with ***neutral***  sentiment and sentiment scale=***0.1***.
+~~~~~~~~
+best clip:The_Donald is a happy face emoji.
+~~~~~~~~
+imgs/44.jpg,neutral: 14/02/2022 23:55:12 | Work on img path: imgs/44.jpg with ***neutral***  sentiment and sentiment scale=***0.01***.
+~~~~~~~~
+best clip:The_Donald is a happy face emoji.
+~~~~~~~~
+imgs/44.jpg,neutral: 15/02/2022 00:00:22 | Work on img path: imgs/44.jpg with ***neutral***  sentiment and sentiment scale=***0.05***.
+~~~~~~~~
+best clip:The_Donald is a happy face emoji.
+~~~~~~~~
+imgs/44.jpg,neutral: 15/02/2022 00:05:32 | Work on img path: imgs/44.jpg with ***neutral***  sentiment and sentiment scale=***0.001***.
+~~~~~~~~
+best clip:The_Donald is a happy face emoji.
+~~~~~~~~
+imgs/43.jpg,negative: 15/02/2022 00:10:42 | Work on img path: imgs/43.jpg with ***negative***  sentiment and sentiment scale=***1***.
+~~~~~~~~
+best clip:The failure of positive reinforcement is not universal in the social context in the social
+~~~~~~~~
+imgs/43.jpg,negative: 15/02/2022 00:55:14 | Work on img path: imgs/43.jpg with ***negative***  sentiment and sentiment scale=***0.5***.
+~~~~~~~~
+best clip:The failure of positive psychology is not the failure of human psychology.
+~~~~~~~~
+imgs/43.jpg,negative: 15/02/2022 01:39:37 | Work on img path: imgs/43.jpg with ***negative***  sentiment and sentiment scale=***0.1***.
+~~~~~~~~
+best clip:The problem of theist optimism is not that theism is false but the
+~~~~~~~~
+imgs/43.jpg,negative: 15/02/2022 02:23:49 | Work on img path: imgs/43.jpg with ***negative***  sentiment and sentiment scale=***0.01***.
+~~~~~~~~
+best clip:In the the the in the first episode of, the "I" is
+~~~~~~~~
+imgs/43.jpg,negative: 15/02/2022 03:08:12 | Work on img path: imgs/43.jpg with ***negative***  sentiment and sentiment scale=***0.05***.
+~~~~~~~~
+best clip:The 'Happy' and the 'The' are used in a way that
+~~~~~~~~
+imgs/43.jpg,negative: 15/02/2022 03:52:33 | Work on img path: imgs/43.jpg with ***negative***  sentiment and sentiment scale=***0.001***.
+~~~~~~~~
+best clip:The 'I Smile Yellow' logo.
+~~~~~~~~
+imgs/43.jpg,positive: 15/02/2022 04:37:14 | Work on img path: imgs/43.jpg with ***positive***  sentiment and sentiment scale=***1***.
+~~~~~~~~
+best clip:The best so you smile at your screen every app.
+~~~~~~~~
+imgs/43.jpg,positive: 15/02/2022 05:09:31 | Work on img path: imgs/43.jpg with ***positive***  sentiment and sentiment scale=***0.5***.
+~~~~~~~~
+best clip:The beautiful smile emoticon icon is designed in Python and used in projects using
+~~~~~~~~
+imgs/43.jpg,positive: 15/02/2022 05:54:38 | Work on img path: imgs/43.jpg with ***positive***  sentiment and sentiment scale=***0.1***.
+~~~~~~~~
+best clip:The " "happy face" logo used on the album covers was designed by
+~~~~~~~~
+imgs/43.jpg,positive: 15/02/2022 06:39:46 | Work on img path: imgs/43.jpg with ***positive***  sentiment and sentiment scale=***0.01***.
+~~~~~~~~
+best clip:The 'I Smile Yellow' image is shown in the 'I Smile Blue
+~~~~~~~~
+imgs/43.jpg,positive: 15/02/2022 07:25:05 | Work on img path: imgs/43.jpg with ***positive***  sentiment and sentiment scale=***0.05***.
+~~~~~~~~
+best clip:The only bright smile in the long--beleaguered world of the
+~~~~~~~~
+imgs/43.jpg,positive: 15/02/2022 08:10:14 | Work on img path: imgs/43.jpg with ***positive***  sentiment and sentiment scale=***0.001***.
+~~~~~~~~
+best clip:The 'Happy' logo used under Windows 10.
+~~~~~~~~
+imgs/43.jpg,neutral: 15/02/2022 08:55:17 | Work on img path: imgs/43.jpg with ***neutral***  sentiment and sentiment scale=***1***.
+~~~~~~~~
+best clip:The 'Happy' logo used under Windows 10.
+~~~~~~~~
+imgs/43.jpg,neutral: 15/02/2022 09:04:16 | Work on img path: imgs/43.jpg with ***neutral***  sentiment and sentiment scale=***0.5***.
+~~~~~~~~
+best clip:The 'Happy' logo used under Windows 10.
+~~~~~~~~
+imgs/43.jpg,neutral: 15/02/2022 09:13:17 | Work on img path: imgs/43.jpg with ***neutral***  sentiment and sentiment scale=***0.1***.
+~~~~~~~~
+best clip:The 'Happy' logo used under Windows 10.
+~~~~~~~~
+imgs/43.jpg,neutral: 15/02/2022 09:22:18 | Work on img path: imgs/43.jpg with ***neutral***  sentiment and sentiment scale=***0.01***.
+~~~~~~~~
+best clip:The 'Happy' logo used under Windows 10.
+~~~~~~~~
+imgs/43.jpg,neutral: 15/02/2022 09:31:18 | Work on img path: imgs/43.jpg with ***neutral***  sentiment and sentiment scale=***0.05***.
+~~~~~~~~
+best clip:The 'Happy' logo used under Windows 10.
+~~~~~~~~
+imgs/43.jpg,neutral: 15/02/2022 09:40:18 | Work on img path: imgs/43.jpg with ***neutral***  sentiment and sentiment scale=***0.001***.
+~~~~~~~~
+
+~~~~~~~~
+imgs/42.jpg,negative: 15/02/2022 09:49:05 | Work on img path: imgs/42.jpg with ***negative***  sentiment and sentiment scale=***1***.
+~~~~~~~~
+
+~~~~~~~~
+imgs/42.jpg,negative: 15/02/2022 09:51:55 | Work on img path: imgs/42.jpg with ***negative***  sentiment and sentiment scale=***1***.
+~~~~~~~~
+
+~~~~~~~~
+imgs/42.jpg,negative: 15/02/2022 10:07:46 | Work on img path: imgs/42.jpg with ***negative***  sentiment and sentiment scale=***1***.
+~~~~~~~~
+best clip:The problem of sala and sar.
+~~~~~~~~
+imgs/42.jpg,positive: 15/02/2022 10:50:55 | Work on img path: imgs/42.jpg with ***positive***  sentiment and sentiment scale=***1***.
+~~~~~~~~
+best clip:The San Pet is Not a Bad Logo The design is simple and has a
+~~~~~~~~
+imgs/42.jpg,negative: 15/02/2022 11:36:56 | Work on img path: imgs/42.jpg with ***negative***  sentiment and sentiment scale=***0.5***.
+~~~~~~~~
+best clip:The failure of Sani Sagar Saponeone Internet provider SAS in
+~~~~~~~~
+imgs/42.jpg,positive: 15/02/2022 12:22:51 | Work on img path: imgs/42.jpg with ***positive***  sentiment and sentiment scale=***0.5***.
+~~~~~~~~
+best clip:In love sag is sad smile font.
+~~~~~~~~
+imgs/42.jpg,negative: 15/02/2022 12:45:47 | Work on img path: imgs/42.jpg with ***negative***  sentiment and sentiment scale=***0.1***.
+~~~~~~~~
+best clip:The "San S SAD" logo used in the browser error.
+~~~~~~~~
+imgs/42.jpg,positive: 15/02/2022 13:28:11 | Work on img path: imgs/42.jpg with ***positive***  sentiment and sentiment scale=***0.1***.
+~~~~~~~~
+best clip:The San Sabah Sad logo is designed on Flickr Creative Commons and is used
+~~~~~~~~
+imgs/42.jpg,negative: 15/02/2022 14:13:56 | Work on img path: imgs/42.jpg with ***negative***  sentiment and sentiment scale=***0.01***.
+~~~~~~~~
+best clip:The Sasa outage caused a headache for the company that has been accused by
+~~~~~~~~
+imgs/42.jpg,positive: 15/02/2022 14:59:43 | Work on img path: imgs/42.jpg with ***positive***  sentiment and sentiment scale=***0.01***.
+~~~~~~~~
+best clip:The Sasa outage is causing sadness.
+~~~~~~~~
+imgs/42.jpg,negative: 15/02/2022 15:45:24 | Work on img path: imgs/42.jpg with ***negative***  sentiment and sentiment scale=***0.01***.
+~~~~~~~~
+best clip:The Sasa outage caused a headache for the company that has been accused by
+~~~~~~~~
+imgs/42.jpg,positive: 15/02/2022 16:31:18 | Work on img path: imgs/42.jpg with ***positive***  sentiment and sentiment scale=***0.01***.
+~~~~~~~~
+best clip:The Sasa outage is causing sadness.
+~~~~~~~~
+imgs/41.jpg,negative: 15/02/2022 17:17:35 | Work on img path: imgs/41.jpg with ***negative***  sentiment and sentiment scale=***1***.
+~~~~~~~~
+best clip:AA disturbing quote caught on to the heart of child anxiety in the minds
+~~~~~~~~
+imgs/41.jpg,positive: 15/02/2022 18:03:57 | Work on img path: imgs/41.jpg with ***positive***  sentiment and sentiment scale=***1***.
+~~~~~~~~
+best clip:The sadd quotes help calm the young and the anxious.
+~~~~~~~~
+imgs/41.jpg,negative: 15/02/2022 18:40:17 | Work on img path: imgs/41.jpg with ***negative***  sentiment and sentiment scale=***0.5***.
+~~~~~~~~
