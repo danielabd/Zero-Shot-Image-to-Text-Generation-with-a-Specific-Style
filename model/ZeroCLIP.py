@@ -103,9 +103,17 @@ class CLIPTextGenerator:
         self.sentiment_model_name = 'roberta_part1' #daniela
         self.sentiment_model = AutoModelForSequenceClassification.from_pretrained(f'masked_result_products_{self.sentiment_model_name}', num_labels=2) #daniela
             
+        self.sentiment_model.to(self.device)
+        self.sentiment_model.eval()
+
+        # Freeze roberta weights
+        for param in self.sentiment_model.parameters():
+            param.requires_grad = False
+            
         #tokenizer for sentiment analysis module #daniela
         self.sentiment_tokenizer_name = 'roberta-base' #daniela
         self.sentiment_tokenizer = AutoTokenizer.from_pretrained(self.sentiment_tokenizer_name) #daniela
+        
         
         self.sentiment_pipe = TextClassificationPipeline(model=self.sentiment_model, tokenizer=self.sentiment_tokenizer, return_all_scores=True, device=0)
         
@@ -239,7 +247,7 @@ class CLIPTextGenerator:
     def get_next_probs(self, i, context_tokens):
         last_token = context_tokens[:, -1:]
         
-        context = None #daniela
+        context = None
         if self.reset_context_delta and context_tokens.size(1) > 1:
             context = self.lm_model(context_tokens[:, :-1])["past_key_values"]
         
@@ -275,27 +283,39 @@ class CLIPTextGenerator:
         sentiment_loss = 0
         losses = []
         for idx_p in range(probs.shape[0]): #go over all beams
+          
             top_texts = []
             prefix_text = prefix_texts[idx_p]
             for x in top_indices[idx_p]: #go over all optional topk next word
                 top_texts.append(prefix_text + self.lm_tokenizer.decode(x))
             
-            
+          
             #get score for text
             with torch.no_grad():
-                out = self.sentiment_pipe(top_texts)
-                sentiment_grades = []
-                for i in range(len(top_texts)): #go over all optional topk next words
-                    assert out[i][1]['label']=='LABEL_1', 'must take label==1' #positive score
-                    if sentiment_type=='positive':
-                        sentiment_grades.append(out[i][1]['score'])
-                    elif sentiment_type=='negative':
-                        sentiment_grades.append(out[i][0]['score'])
-                sentiment_grades = torch.Tensor(sentiment_grades).unsqueeze(0)
-            
+               
+#                out = self.sentiment_pipe(top_texts)
+#                sentiment_grades = []
+#                for i in range(len(top_texts)): #go over all optional topk next words
+#                    assert out[i][1]['label']=='LABEL_1', 'must take label==1' #positive score
+#                    if sentiment_type=='positive':
+#                        sentiment_grades.append(out[i][1]['score'])
+#                    elif sentiment_type=='negative':
+#                        sentiment_grades.append(out[i][0]['score'])
+#                sentiment_grades = torch.Tensor(sentiment_grades).unsqueeze(0)
+                
+                inputs = self.sentiment_tokenizer(top_texts,  padding=True, return_tensors="pt")
+                tokens = inputs['input_ids'].to(self.sentiment_model.device)
+                logits = self.sentiment_model(tokens)['logits']
+                sentiment_grades = None
+                if sentiment_type=='positive':
+                        sentiment_grades= nn.functional.softmax(logits, dim=-1)[:,1]
+                elif sentiment_type=='negative':
+                        sentiment_grades= nn.functional.softmax(logits, dim=-1)[:,0]
+                 
+                
                 predicted_probs = nn.functional.softmax(sentiment_grades / self.clip_loss_temperature, dim=-1).detach()
                 predicted_probs = predicted_probs.type(torch.float32).to(self.device)
-            
+   
             target = torch.zeros_like(probs[idx_p], device=self.device)
             target[top_indices[idx_p]] = predicted_probs[0]
             # target[top_indices[idx_p]] = 1
@@ -350,14 +370,9 @@ class CLIPTextGenerator:
             
             loss += ce_loss.sum()
             
-            sentiment_type = 'positive'
             if self.sentiment_type!='neutral':
                 sentiment_loss, sentiment_losses = self.get_sentiment_loss(probs, context_tokens,self.sentiment_type)
-                loss += self.sentiment_scale * sentiment_loss
-            # if self.sentiment_type=='positive':
-            #     loss += self.sentiment_scale * sentiment_loss #positive
-            # elif self.sentiment_type=='negative':
-            #     loss -= self.sentiment_scale * sentiment_loss #negative               
+                loss += self.sentiment_scale * sentiment_loss            
             
             
             loss.backward()
@@ -464,6 +479,7 @@ class CLIPTextGenerator:
             prefix_text = prefix_texts[idx_p]
             for x in top_indices[idx_p]:
                 top_texts.append(prefix_text + self.lm_tokenizer.decode(x))
+          
             text_features = self.get_txt_features(top_texts)
 
             with torch.no_grad():
