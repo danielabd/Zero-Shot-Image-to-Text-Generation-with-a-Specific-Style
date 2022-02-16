@@ -4,6 +4,7 @@ import clip
 from model.ZeroCLIP import CLIPTextGenerator
 from datetime import datetime
 import os.path
+import csv
 
 def get_args():
     parser = argparse.ArgumentParser()
@@ -47,7 +48,7 @@ def get_args():
 
     return args
 
-def run(args, img_path,sentiment_type,log_file,final_log_file,sentiment_scale):
+def run(args, img_path,sentiment_type,log_file,final_log_file, writer, sentiment_scale):
     text_generator = CLIPTextGenerator(log_file,**vars(args))
 
     image_features = text_generator.get_img_feature([img_path], None)
@@ -65,6 +66,8 @@ def run(args, img_path,sentiment_type,log_file,final_log_file,sentiment_scale):
         fp.write('best clip:'+args.cond_text + captions[best_clip_idx])
     with open(final_log_file,'a') as fp:
         fp.write('best clip:'+args.cond_text + captions[best_clip_idx])
+        
+    writer.writerow(['', sentiment_scale, args.cond_text + captions[best_clip_idx]])
 
 def run_arithmetic(args, imgs_path, img_weights):
     text_generator = CLIPTextGenerator(**vars(args))
@@ -89,14 +92,21 @@ if __name__ == "__main__":
     img_path_list = range(42,0,-1)
     sentiment_list = ['negative','positive','neutral']
     # sentiment_scale_list = [1,0.5,0.1,0.01,0.05,0.001]
-    sentiment_scale_list = [1,0.5,0.1,0.01,0.01]
+    sentiment_scale_list = [2.0,1.5,1.0,0.5,0.1,0.01]
+    
+    results_file = open('results.csv', 'w+')
+    writer = csv.writer(results_file)
+    
     for i in img_path_list:
-        for sentiment_scale in sentiment_scale_list:
-            for sentiment_type in sentiment_list:
-                if sentiment_type=='neutral' and sentiment_scale_list!=1:
-                    break
-                args.caption_img_path = "imgs/"+str(i)+".jpg"                     
-                if not os.path.isfile(args.caption_img_path):
+        args.caption_img_path = "imgs/"+str(i)+".jpg" 
+        if not os.path.isfile(args.caption_img_path):
+            continue
+            
+        for sentiment_type in sentiment_list:
+            writer.writerow([args.caption_img_path, sentiment_type])
+            results_file.flush()
+            for sentiment_scale in sentiment_scale_list:
+                if sentiment_type=='neutral' and sentiment_scale!=1:
                     continue
 
                 dt_string = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
@@ -107,9 +117,11 @@ if __name__ == "__main__":
                     fp.write(f'\n~~~~~~~~\n{args.caption_img_path},{sentiment_type}: {dt_string} | Work on img path: {args.caption_img_path} with ***{sentiment_type}***  sentiment and sentiment scale=***{sentiment_scale}***.\n~~~~~~~~\n')
 
                 if args.run_type == 'caption':
-                    run(args, img_path=args.caption_img_path,sentiment_type=sentiment_type,log_file=log_file,final_log_file=final_log_file,sentiment_scale=sentiment_scale)
+                    run(args, img_path=args.caption_img_path,sentiment_type=sentiment_type,log_file=log_file,final_log_file=final_log_file, writer = writer, sentiment_scale=sentiment_scale)
                 elif args.run_type == 'arithmetics':
                     args.arithmetics_weights = [float(x) for x in args.arithmetics_weights]
                     run_arithmetic(args, imgs_path=args.arithmetics_imgs, img_weights=args.arithmetics_weights)
                 else:
                     raise Exception('run_type must be caption or arithmetics!')
+                    
+    results_file.close()
