@@ -5,6 +5,7 @@ from model.ZeroCLIP import CLIPTextGenerator
 from datetime import datetime
 import os.path
 import csv
+from collections import defaultdict
 
 def get_args():
     parser = argparse.ArgumentParser()
@@ -48,7 +49,7 @@ def get_args():
 
     return args
 
-def run(args, img_path,sentiment_type,log_file,final_log_file, writer, sentiment_scale):
+def run(args, img_path,sentiment_type,log_file,final_log_file, sentiment_scale):
     text_generator = CLIPTextGenerator(log_file,**vars(args))
 
     image_features = text_generator.get_img_feature([img_path], None)
@@ -66,8 +67,8 @@ def run(args, img_path,sentiment_type,log_file,final_log_file, writer, sentiment
         fp.write('best clip:'+args.cond_text + captions[best_clip_idx])
     with open(final_log_file,'a') as fp:
         fp.write('best clip:'+args.cond_text + captions[best_clip_idx])
-        
-    writer.writerow(['', sentiment_scale, args.cond_text + captions[best_clip_idx]])
+    
+    img_dict[img_path][sentiment_scale][sentiment_type] = args.cond_text + captions[best_clip_idx]
 
 def run_arithmetic(args, imgs_path, img_weights):
     text_generator = CLIPTextGenerator(**vars(args))
@@ -83,29 +84,37 @@ def run_arithmetic(args, imgs_path, img_weights):
     print('best clip:', args.cond_text + captions[best_clip_idx])
 
 
+def write_results(img_dict):
+    with open('results.csv', 'w') as results_file:
+        writer = csv.writer(results_file)
+        for img in img_dict.keys():    
+            writer.writerow([img])
+            writer.writerow(['scale/sentiment', 'negative', 'positive', 'neutral'])        
+            for scale in img_dict[img].keys():
+                cur_row = [scale]
+                for sentiment in img_dict[img][scale].keys():
+                    cur_row.append(img_dict[img][scale][sentiment])
+                writer.writerow(cur_row)
+                writer.writerow([])
+
 if __name__ == "__main__":
     args = get_args()
-    log_file = 'daniela_log.txt'
-    final_log_file = 'daniela_final_results_log.txt'
-    #img_path_list = range(2,13)#daniela ad  option for list of imgs
-    # img_path_list = range(44,0,-1)
-    img_path_list = range(42,0,-1)
+    log_file = 'log.txt'
+    final_log_file = 'final_results_log.txt'
+    img_path_list = range(44,0,-1)
     sentiment_list = ['negative','positive','neutral']
-    # sentiment_scale_list = [1,0.5,0.1,0.01,0.05,0.001]
     sentiment_scale_list = [2.0,1.5,1.0,0.5,0.1,0.01]
     
-    results_file = open('results.csv', 'w+')
-    writer = csv.writer(results_file)
+    img_dict = defaultdict(lambda: defaultdict(lambda :defaultdict(lambda: "")))
     
     for i in img_path_list:
         args.caption_img_path = "imgs/"+str(i)+".jpg" 
         if not os.path.isfile(args.caption_img_path):
             continue
             
-        for sentiment_type in sentiment_list:
-            writer.writerow([args.caption_img_path, sentiment_type])
-            results_file.flush()
-            for sentiment_scale in sentiment_scale_list:
+        for sentiment_scale in sentiment_scale_list:
+            for sentiment_type in sentiment_list:
+            
                 if sentiment_type=='neutral' and sentiment_scale!=1:
                     continue
 
@@ -117,11 +126,11 @@ if __name__ == "__main__":
                     fp.write(f'\n~~~~~~~~\n{args.caption_img_path},{sentiment_type}: {dt_string} | Work on img path: {args.caption_img_path} with ***{sentiment_type}***  sentiment and sentiment scale=***{sentiment_scale}***.\n~~~~~~~~\n')
 
                 if args.run_type == 'caption':
-                    run(args, img_path=args.caption_img_path,sentiment_type=sentiment_type,log_file=log_file,final_log_file=final_log_file, writer = writer, sentiment_scale=sentiment_scale)
+                    run(args, args.caption_img_path, sentiment_type, log_file, final_log_file, sentiment_scale)
+                    write_results(img_dict)
                 elif args.run_type == 'arithmetics':
                     args.arithmetics_weights = [float(x) for x in args.arithmetics_weights]
                     run_arithmetic(args, imgs_path=args.arithmetics_imgs, img_weights=args.arithmetics_weights)
                 else:
                     raise Exception('run_type must be caption or arithmetics!')
                     
-    results_file.close()
