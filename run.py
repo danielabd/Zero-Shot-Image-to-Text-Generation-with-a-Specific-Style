@@ -114,9 +114,6 @@ if __name__ == "__main__":
             
         for sentiment_scale in sentiment_scale_list:
             for sentiment_type in sentiment_list:
-            
-                if sentiment_type=='neutral' and sentiment_scale!=1:
-                    continue
 
                 dt_string = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
                 print(f'~~~~~~~~\n{dt_string} | Work on img path: {args.caption_img_path} with ***{sentiment_type}***  sentiment and sentiment scale=***{sentiment_scale}***.\n~~~~~~~~')
@@ -133,4 +130,7 @@ if __name__ == "__main__":
                     run_arithmetic(args, imgs_path=args.arithmetics_imgs, img_weights=args.arithmetics_weights)
                 else:
                     raise Exception('run_type must be caption or arithmetics!')
+                    
+                if sentiment_type=='neutral':
+                    break
                     
