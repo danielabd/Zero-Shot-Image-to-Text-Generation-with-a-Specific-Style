@@ -14,7 +14,7 @@ def get_args():
     parser.add_argument("--lm_model", type=str, default="gpt-2", help="gpt-2 or gpt-neo")
     parser.add_argument("--clip_checkpoints", type=str, default="./clip_checkpoints", help="path to CLIP")
     parser.add_argument("--target_seq_length", type=int, default=15)
-    # parser.add_argument("--cond_text", type=str, default="Image of a")#danirla removed
+    #parser.add_argument("--cond_text", type=str, default="Image of a")#danirla removed
     parser.add_argument("--cond_text", type=str, default="")
     parser.add_argument("--reset_context_delta", action="store_true",
                         help="Should we reset the context at each token gen")
@@ -101,19 +101,22 @@ if __name__ == "__main__":
     args = get_args()
     log_file = 'log.txt'
     final_log_file = 'final_results_log.txt'
-    img_path_list = range(44,0,-1)
+    img_path_list = range(45)
     sentiment_list = ['negative','positive','neutral']
-    sentiment_scale_list = [2.0,1.5,1.0,0.5,0.1,0.01]
+    sentiment_scale_list = [2.0, 1.5, 1.0, 0.5, 0.1]
     
     img_dict = defaultdict(lambda: defaultdict(lambda :defaultdict(lambda: "")))
     
-    for i in img_path_list:
-        args.caption_img_path = "imgs/"+str(i)+".jpg" 
-        if not os.path.isfile(args.caption_img_path):
-            continue
+    for s, sentiment_scale in enumerate(sentiment_scale_list):
+        for i in img_path_list:
+            args.caption_img_path = "imgs/"+str(i)+".jpg" 
+            if not os.path.isfile(args.caption_img_path):
+                continue
             
-        for sentiment_scale in sentiment_scale_list:
             for sentiment_type in sentiment_list:
+            
+                if sentiment_type=='neutral' and s>0:
+                    continue
 
                 dt_string = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
                 print(f'~~~~~~~~\n{dt_string} | Work on img path: {args.caption_img_path} with ***{sentiment_type}***  sentiment and sentiment scale=***{sentiment_scale}***.\n~~~~~~~~')
@@ -131,6 +134,4 @@ if __name__ == "__main__":
                 else:
                     raise Exception('run_type must be caption or arithmetics!')
                     
-                if sentiment_type=='neutral':
-                    break
                     

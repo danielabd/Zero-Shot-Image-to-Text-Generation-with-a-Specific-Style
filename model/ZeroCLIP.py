@@ -303,14 +303,17 @@ class CLIPTextGenerator:
 #                        sentiment_grades.append(out[i][0]['score'])
 #                sentiment_grades = torch.Tensor(sentiment_grades).unsqueeze(0)
                 
-                inputs = self.sentiment_tokenizer(top_texts,  padding=True, return_tensors="pt")
-                tokens = inputs['input_ids'].to(self.sentiment_model.device)
-                logits = self.sentiment_model(tokens)['logits']
+                inputs = self.sentiment_tokenizer(top_texts, padding=True, return_tensors="pt")
+                inputs['input_ids'] = inputs['input_ids'].to(self.sentiment_model.device)
+                inputs['attention_mask'] = inputs['attention_mask'].to(self.sentiment_model.device)
+                logits = self.sentiment_model(**inputs)['logits']
                 sentiment_grades = None
                 if sentiment_type=='positive':
                         sentiment_grades= nn.functional.softmax(logits, dim=-1)[:,1]
+                        #sentiment_grades= logits[:,1]
                 elif sentiment_type=='negative':
                         sentiment_grades= nn.functional.softmax(logits, dim=-1)[:,0]
+                        #sentiment_grades= logits[:,0]
                  
                 
                 predicted_probs = nn.functional.softmax(sentiment_grades / self.clip_loss_temperature, dim=-1).detach()
