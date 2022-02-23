@@ -297,7 +297,7 @@ class CLIPTextGenerator:
         sentiment_loss = 0
         losses = []
         
-        seq = True
+        seq = False
         
         for idx_p in range(probs.shape[0]): #go over all beams
           
@@ -312,10 +312,9 @@ class CLIPTextGenerator:
             with torch.no_grad():
                 if seq:
                     text_ds = CustomDataset(top_texts)
-                    print('before')
+        
                     out = self.sentiment_pipe(text_ds)
-                    print('after')
-                  
+          
                     sentiment_grades = []
                     for cur_res in out: #go over all optional topk next words
                      
@@ -329,7 +328,8 @@ class CLIPTextGenerator:
                     inputs = self.sentiment_tokenizer(top_texts, padding=True, return_tensors="pt")
                     inputs['input_ids'] = inputs['input_ids'].to(self.sentiment_model.device)
                     inputs['attention_mask'] = inputs['attention_mask'].to(self.sentiment_model.device)
-                    logits = self.sentiment_model(**inputs)['logits']
+                    logits = self.sentiment_model(**inputs)['logits'].detach().cpu()
+                                       
                     sentiment_grades = None
                     if sentiment_type=='positive':
                             sentiment_grades= nn.functional.softmax(logits, dim=-1)[:,1]
@@ -337,7 +337,8 @@ class CLIPTextGenerator:
                     elif sentiment_type=='negative':
                             sentiment_grades= nn.functional.softmax(logits, dim=-1)[:,0]
                             #sentiment_grades= logits[:,0]
-                 
+                    print('hi')
+                    sentiment_grades = sentiment_grades.unsqueeze(0)
                 
                 predicted_probs = nn.functional.softmax(sentiment_grades / self.clip_loss_temperature, dim=-1).detach()
                 predicted_probs = predicted_probs.type(torch.float32).to(self.device)
