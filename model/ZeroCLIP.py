@@ -11,18 +11,6 @@ from transformers import TextClassificationPipeline #daniela
 from transformers import AutoModelForSequenceClassification, AutoTokenizer #daniela
 
 
-from torch.utils.data import Dataset 
- 
-class CustomDataset(Dataset):
-    def __init__(self, texts):
-        self.texts = texts
-
-    def __len__(self):
-        return len(self.texts)
-
-    def __getitem__(self, idx):
-        return self.texts[idx]
-
 def log_info(text, log_file, verbose=True):
     if verbose:
         dt_string = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
@@ -296,9 +284,7 @@ class CLIPTextGenerator:
 
         sentiment_loss = 0
         losses = []
-        
-        seq = False
-        
+
         for idx_p in range(probs.shape[0]): #go over all beams
           
             top_texts = []
@@ -310,35 +296,20 @@ class CLIPTextGenerator:
             
             #get score for text
             with torch.no_grad():
-                if seq:
-                    text_ds = CustomDataset(top_texts)
-        
-                    out = self.sentiment_pipe(text_ds)
-          
-                    sentiment_grades = []
-                    for cur_res in out: #go over all optional topk next words
-                     
-                        #assert out[i][1]['label']=='LABEL_1', 'must take label==1' #positive score
-                        if sentiment_type=='positive':
-                            sentiment_grades.append(cur_res[1]['score'])
-                        elif sentiment_type=='negative':
-                            sentiment_grades.append(cur_res[0]['score'])
-                    sentiment_grades = torch.Tensor(sentiment_grades).unsqueeze(0)
-                else:
-                    inputs = self.sentiment_tokenizer(top_texts, padding=True, return_tensors="pt")
-                    inputs['input_ids'] = inputs['input_ids'].to(self.sentiment_model.device)
-                    inputs['attention_mask'] = inputs['attention_mask'].to(self.sentiment_model.device)
-                    logits = self.sentiment_model(**inputs)['logits'].detach().cpu()
-                                       
-                    sentiment_grades = None
-                    if sentiment_type=='positive':
-                            sentiment_grades= nn.functional.softmax(logits, dim=-1)[:,1]
-                            #sentiment_grades= logits[:,1]
-                    elif sentiment_type=='negative':
-                            sentiment_grades= nn.functional.softmax(logits, dim=-1)[:,0]
-                            #sentiment_grades= logits[:,0]
-                    print('hi')
-                    sentiment_grades = sentiment_grades.unsqueeze(0)
+               
+                inputs = self.sentiment_tokenizer(top_texts, padding=True, return_tensors="pt")
+                inputs['input_ids'] = inputs['input_ids'].to(self.sentiment_model.device)
+                inputs['attention_mask'] = inputs['attention_mask'].to(self.sentiment_model.device)
+                logits = self.sentiment_model(**inputs)['logits']
+                                   
+                sentiment_grades = None
+                if sentiment_type=='positive':
+                        sentiment_grades= nn.functional.softmax(logits, dim=-1)[:,1]
+                        #sentiment_grades= logits[:,1]
+                elif sentiment_type=='negative':
+                        sentiment_grades= nn.functional.softmax(logits, dim=-1)[:,0]
+                        #sentiment_grades= logits[:,0]
+                sentiment_grades = sentiment_grades.unsqueeze(0)
                 
                 predicted_probs = nn.functional.softmax(sentiment_grades / self.clip_loss_temperature, dim=-1).detach()
                 predicted_probs = predicted_probs.type(torch.float32).to(self.device)
