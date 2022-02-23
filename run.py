@@ -14,8 +14,8 @@ def get_args():
     parser.add_argument("--lm_model", type=str, default="gpt-2", help="gpt-2 or gpt-neo")
     parser.add_argument("--clip_checkpoints", type=str, default="./clip_checkpoints", help="path to CLIP")
     parser.add_argument("--target_seq_length", type=int, default=15)
-    #parser.add_argument("--cond_text", type=str, default="Image of a")#danirla removed
-    parser.add_argument("--cond_text", type=str, default="")
+    parser.add_argument("--cond_text", type=str, default="Image of a")#danirla removed
+    #parser.add_argument("--cond_text", type=str, default="")
     parser.add_argument("--reset_context_delta", action="store_true",
                         help="Should we reset the context at each token gen")
     parser.add_argument("--num_iterations", type=int, default=5)
@@ -102,7 +102,9 @@ if __name__ == "__main__":
     log_file = 'log.txt'
     final_log_file = 'final_results_log.txt'
     img_path_list = range(45)
+    img_path_list = [33]
     sentiment_list = ['negative','positive','neutral']
+    sentiment_list = ['negative']
     sentiment_scale_list = [2.0, 1.5, 1.0, 0.5, 0.1]
     
     img_dict = defaultdict(lambda: defaultdict(lambda :defaultdict(lambda: "")))
