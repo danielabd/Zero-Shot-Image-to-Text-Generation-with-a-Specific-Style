@@ -101,8 +101,8 @@ class CLIPTextGenerator:
         self.forbidden_factor = forbidden_factor
 
         #model #daniela
-        self.sentiment_model_name = 'roberta_part1' #daniela
-        self.sentiment_model = AutoModelForSequenceClassification.from_pretrained(f'masked_result_products_{self.sentiment_model_name}', num_labels=2) #daniela
+        self.sentiment_model_name = 'siebert/sentiment-roberta-large-english' #daniela
+        self.sentiment_model = AutoModelForSequenceClassification.from_pretrained(f'{self.sentiment_model_name}', num_labels=2) #daniela
             
         self.sentiment_model.to(self.device)
         self.sentiment_model.eval()
@@ -112,7 +112,7 @@ class CLIPTextGenerator:
             param.requires_grad = False
             
         #tokenizer for sentiment analysis module #daniela
-        self.sentiment_tokenizer_name = 'roberta-base' #daniela
+        self.sentiment_tokenizer_name = 'roberta-large' #daniela
         self.sentiment_tokenizer = AutoTokenizer.from_pretrained(self.sentiment_tokenizer_name) #daniela
         
         
