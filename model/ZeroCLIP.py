@@ -99,10 +99,12 @@ class CLIPTextGenerator:
         self.end_factor = end_factor
         self.ef_idx = 1
         self.forbidden_factor = forbidden_factor
-
+        
+        task='sentiment'
+        MODEL = f"cardiffnlp/twitter-roberta-base-{task}"
         #model #daniela
-        self.sentiment_model_name = 'siebert/sentiment-roberta-large-english' #daniela
-        self.sentiment_model = AutoModelForSequenceClassification.from_pretrained(f'{self.sentiment_model_name}', num_labels=2) #daniela
+        self.sentiment_model_name = MODEL #daniela
+        self.sentiment_model = AutoModelForSequenceClassification.from_pretrained(self.sentiment_model_name) #daniela
             
         self.sentiment_model.to(self.device)
         self.sentiment_model.eval()
@@ -112,14 +114,14 @@ class CLIPTextGenerator:
             param.requires_grad = False
             
         #tokenizer for sentiment analysis module #daniela
-        self.sentiment_tokenizer_name = 'roberta-large' #daniela
+        self.sentiment_tokenizer_name =  self.sentiment_model_name #daniela
         self.sentiment_tokenizer = AutoTokenizer.from_pretrained(self.sentiment_tokenizer_name) #daniela
         
         
         self.sentiment_pipe = TextClassificationPipeline(model=self.sentiment_model, tokenizer=self.sentiment_tokenizer, return_all_scores=True, device=0)
         
         self.sentiment_scale = 1 #daniela
-        self.sentiment_type = 'neutral' #daniela
+        self.sentiment_type = 'none' #daniela
         self.log_file=log_file
         
     def get_img_feature(self, img_path, weights):
@@ -164,7 +166,7 @@ class CLIPTextGenerator:
 
     def run(self, image_features, cond_text, beam_size, sentiment_type,sentiment_scale):
         '''
-        sentiment_type can be one of ['positive','negative','neutral']
+        sentiment_type can be one of ['positive','negative','neutral', 'none']
         '''
         self.image_features = image_features
         self.sentiment_type = sentiment_type
@@ -304,11 +306,11 @@ class CLIPTextGenerator:
                                    
                 sentiment_grades = None
                 if sentiment_type=='positive':
+                        sentiment_grades= nn.functional.softmax(logits, dim=-1)[:,2]
+                elif sentiment_type=='neutral':
                         sentiment_grades= nn.functional.softmax(logits, dim=-1)[:,1]
-                        #sentiment_grades= logits[:,1]
                 elif sentiment_type=='negative':
                         sentiment_grades= nn.functional.softmax(logits, dim=-1)[:,0]
-                        #sentiment_grades= logits[:,0]
                 sentiment_grades = sentiment_grades.unsqueeze(0)
                 
                 predicted_probs = nn.functional.softmax(sentiment_grades / self.clip_loss_temperature, dim=-1).detach()
@@ -369,7 +371,7 @@ class CLIPTextGenerator:
             
             loss += ce_loss.sum()
             
-            if self.sentiment_type!='neutral':
+            if self.sentiment_type!='none':
                 sentiment_loss, sentiment_losses = self.get_sentiment_loss(probs, context_tokens,self.sentiment_type)
                 loss += self.sentiment_scale * sentiment_loss            
             

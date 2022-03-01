@@ -89,7 +89,7 @@ def write_results(img_dict):
         writer = csv.writer(results_file)
         for img in img_dict.keys():    
             writer.writerow([img])
-            writer.writerow(['scale/sentiment', 'negative', 'positive', 'neutral'])        
+            writer.writerow(['scale/sentiment', 'negative', 'positive', 'neutral','none'])        
             for scale in img_dict[img].keys():
                 cur_row = [scale]
                 for sentiment in img_dict[img][scale].keys():
@@ -102,9 +102,7 @@ if __name__ == "__main__":
     log_file = 'log.txt'
     final_log_file = 'final_results_log.txt'
     img_path_list = range(45)
-    img_path_list = [33]
-    sentiment_list = ['negative','positive','neutral']
-    sentiment_list = ['negative']
+    sentiment_list = ['negative','positive','neutral', 'none']
     sentiment_scale_list = [2.0, 1.5, 1.0, 0.5, 0.1]
     
     img_dict = defaultdict(lambda: defaultdict(lambda :defaultdict(lambda: "")))
@@ -117,7 +115,7 @@ if __name__ == "__main__":
             
             for sentiment_type in sentiment_list:
             
-                if sentiment_type=='neutral' and s>0:
+                if sentiment_type=='none' and s>0:
                     continue
 
                 dt_string = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
