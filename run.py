@@ -25,7 +25,7 @@ def get_args():
     parser.add_argument("--stepsize", type=float, default=0.3)
     parser.add_argument("--grad_norm_factor", type=float, default=0.9)
     parser.add_argument("--fusion_factor", type=float, default=0.99)
-    parser.add_argument("--repetition_penalty", type=float, default=1)
+    parser.add_argument("--repetition_penalty", type=float, default=2)
     parser.add_argument("--end_token", type=str, default=".", help="Token to end text")
     parser.add_argument("--end_factor", type=float, default=1.01, help="Factor to increase end_token")
     parser.add_argument("--forbidden_factor", type=float, default=20, help="Factor to decrease forbidden tokens")
@@ -61,12 +61,7 @@ def run(args, img_path,sentiment_type,log_file,final_log_file, sentiment_scale):
 
     print(captions)
     print('best clip:', args.cond_text + captions[best_clip_idx])
-    with open(log_file,'a') as fp:
-        for c in captions:
-            fp.write(c)
-        fp.write('best clip:'+args.cond_text + captions[best_clip_idx])
-    with open(final_log_file,'a') as fp:
-        fp.write('best clip:'+args.cond_text + captions[best_clip_idx])
+
     
     img_dict[img_path][sentiment_scale][sentiment_type] = args.cond_text + captions[best_clip_idx]
 
@@ -120,10 +115,6 @@ if __name__ == "__main__":
 
                 dt_string = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
                 print(f'~~~~~~~~\n{dt_string} | Work on img path: {args.caption_img_path} with ***{sentiment_type}***  sentiment and sentiment scale=***{sentiment_scale}***.\n~~~~~~~~')
-                with open(log_file,'a') as fp:
-                    fp.write(f'\n~~~~~~~~\n{dt_string} | Work on img path: {args.caption_img_path} with ***{sentiment_type}***  sentiment and sentiment scale=***{sentiment_scale}***.\n~~~~~~~~\n')
-                with open(final_log_file,'a') as fp:
-                    fp.write(f'\n~~~~~~~~\n{args.caption_img_path},{sentiment_type}: {dt_string} | Work on img path: {args.caption_img_path} with ***{sentiment_type}***  sentiment and sentiment scale=***{sentiment_scale}***.\n~~~~~~~~\n')
 
                 if args.run_type == 'caption':
                     run(args, args.caption_img_path, sentiment_type, log_file, final_log_file, sentiment_scale)
