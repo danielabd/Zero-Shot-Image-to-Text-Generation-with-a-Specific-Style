@@ -7,7 +7,7 @@
 ## Example of capabilities
 
 variety successful captions of variety images according to the desired sentiment:
-![](git_images/3_examples_imgs.png.png)
+![](git_images/3_examples_imgs.png)
 
 The Effect of λ_sentiment on the Caption:
 ![](git_images/different_lambda.png)
