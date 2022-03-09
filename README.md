@@ -3,6 +3,13 @@
 ## Approach
 ![](git_images/Architecture.jpg)
 
+
+## Example of capabilities
+![](git_images/negative_img.png)
+![](git_images/positive_img.png)
+![](git_images/neutral_img.png)
+![](git_images/different_lambda.png)
+
 ## Usage
 
 ### Set up environment:
