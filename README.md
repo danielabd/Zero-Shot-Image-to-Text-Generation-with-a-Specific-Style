@@ -8,7 +8,9 @@
 ### Set up environment:
 ```bash
 $ ./setup.sh
+$ conda activate zeroshot
 ```
+
 
 ### Run model:
 ```bash
