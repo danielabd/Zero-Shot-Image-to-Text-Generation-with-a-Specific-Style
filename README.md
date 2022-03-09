@@ -11,7 +11,7 @@ variety successful captions of variety images according to the desired sentiment
   
 The Effect of λ_sentiment on the Caption:  
 ![](git_images/small_different_lambda.png)  
-as λ is bigger the description in the desired sentiment perspective is stronger but the maintaining on right language attribute is compromised.
+as λ is bigger the description in the desired sentiment perspective is stronger but the maintenance on the right language attribute is compromised.
 
 ## Usage
 
