@@ -7,16 +7,14 @@ import clip
 from PIL import Image
 from datetime import datetime
 import sys
-from transformers import TextClassificationPipeline #daniela
-from transformers import AutoModelForSequenceClassification, AutoTokenizer #daniela
+from transformers import TextClassificationPipeline # SENTIMENT
+from transformers import AutoModelForSequenceClassification, AutoTokenizer # SENTIMENT
 
 
-def log_info(text, log_file, verbose=True):
+def log_info(text, verbose=True):
     if verbose:
         dt_string = datetime.now().strftime("%d/%m/%Y %H:%M:%S")
         print(f'{dt_string} | {text}')
-        with open(log_file,'a') as fp:
-            fp.write(f'{dt_string} | {text}')
         sys.stdout.flush()
 
 
@@ -30,7 +28,7 @@ def convert_models_to_fp32(model):
 
 
 class CLIPTextGenerator:
-    def __init__(self,log_file,
+    def __init__(self,
                  seed=0,
                  lm_model='gpt-2',
                  forbidden_tokens_file_path='./forbidden_tokens.npy',
@@ -100,29 +98,29 @@ class CLIPTextGenerator:
         self.ef_idx = 1
         self.forbidden_factor = forbidden_factor
         
+        
+        # SENTIMENT: adding the sentiment model 
         task='sentiment'
         MODEL = f"cardiffnlp/twitter-roberta-base-{task}"
-        #model #daniela
-        self.sentiment_model_name = MODEL #daniela
-        self.sentiment_model = AutoModelForSequenceClassification.from_pretrained(self.sentiment_model_name) #daniela
+        
+        self.sentiment_model_name = MODEL 
+        self.sentiment_model = AutoModelForSequenceClassification.from_pretrained(self.sentiment_model_name) 
             
         self.sentiment_model.to(self.device)
         self.sentiment_model.eval()
 
-        # Freeze roberta weights
+        # SENTIMENT: Freeze sentiment model weights
         for param in self.sentiment_model.parameters():
             param.requires_grad = False
             
-        #tokenizer for sentiment analysis module #daniela
-        self.sentiment_tokenizer_name =  self.sentiment_model_name #daniela
-        self.sentiment_tokenizer = AutoTokenizer.from_pretrained(self.sentiment_tokenizer_name) #daniela
+        # SENTIMENT: tokenizer for sentiment analysis module 
+        self.sentiment_tokenizer_name =  self.sentiment_model_name 
+        self.sentiment_tokenizer = AutoTokenizer.from_pretrained(self.sentiment_tokenizer_name) 
         
+        # SENTIMENT: fields for type and scale of sentiment
+        self.sentiment_scale = 1 
+        self.sentiment_type = 'none' 
         
-        self.sentiment_pipe = TextClassificationPipeline(model=self.sentiment_model, tokenizer=self.sentiment_tokenizer, return_all_scores=True, device=0)
-        
-        self.sentiment_scale = 1 #daniela
-        self.sentiment_type = 'none' #daniela
-        self.log_file=log_file
         
     def get_img_feature(self, img_path, weights):
         imgs = [Image.open(x) for x in img_path]
@@ -165,9 +163,8 @@ class CLIPTextGenerator:
             return features.detach()
 
     def run(self, image_features, cond_text, beam_size, sentiment_type,sentiment_scale):
-        '''
-        sentiment_type can be one of ['positive','negative','neutral', 'none']
-        '''
+    
+        # SENTIMENT: sentiment_type can be one of ['positive','negative','neutral', 'none']
         self.image_features = image_features
         self.sentiment_type = sentiment_type
         self.sentiment_scale = sentiment_scale
@@ -230,7 +227,7 @@ class CLIPTextGenerator:
             ]
             tmp_order = tmp_scores.argsort(descending=True)
             tmp_output_texts = [tmp_output_texts[i] + ' %% ' + str(tmp_scores[i].cpu().numpy()) for i in tmp_order]
-            log_info(tmp_output_texts, self.log_file, verbose=True)
+            log_info(tmp_output_texts, verbose=True)
             ####
 
             if is_stopped.all():
@@ -259,16 +256,6 @@ class CLIPTextGenerator:
         logits_before_shift = logits_before_shift[:, -1, :]
         probs_before_shift = nn.functional.softmax(logits_before_shift, dim=-1)
         
-        # initial candidates
-        #indices = torch.argmax(probs_before_shift, dim=-1)
-        #print(context_tokens)
-        #print(indices)
-        #print(self.lm_tokenizer.decode(context_tokens[0]))
-        #for index in indices:
-        #    print(self.lm_tokenizer.decode([index]))
-
-
-
         if context:
             context = self.shift_context(i, context, last_token, context_tokens, probs_before_shift)
 
@@ -287,8 +274,8 @@ class CLIPTextGenerator:
 
         return probs
         
-    
-    def get_sentiment_loss(self, probs, context_tokens,sentiment_type): #daniela
+    # SENTIMENT: function we added for changing the result to the requested sentiment
+    def get_sentiment_loss(self, probs, context_tokens,sentiment_type): 
         top_size = 512
         _, top_indices = probs.topk(top_size, -1)
 
@@ -303,7 +290,6 @@ class CLIPTextGenerator:
             prefix_text = prefix_texts[idx_p]
             for x in top_indices[idx_p]: #go over all optional topk next word
                 top_texts.append(prefix_text + self.lm_tokenizer.decode(x))
-            
             
             
             #get score for text
@@ -326,13 +312,13 @@ class CLIPTextGenerator:
                 predicted_probs = nn.functional.softmax(sentiment_grades / self.clip_loss_temperature, dim=-1).detach()
                 predicted_probs = predicted_probs.type(torch.float32).to(self.device)
              
-            #print(torch.max(predicted_probs))
+            
             target = torch.zeros_like(probs[idx_p], device=self.device)
             target[top_indices[idx_p]] = predicted_probs[0]
-            # target[top_indices[idx_p]] = 1
+            
             target = target.unsqueeze(0)
             cur_sentiment_loss = torch.sum(-(target * torch.log(probs[idx_p:(idx_p + 1)])))
-            # cur_sentiment_loss = torch.sum(-( torch.log(predicted_probs[0])))
+            
             
             sentiment_loss += cur_sentiment_loss
             losses.append(cur_sentiment_loss)
@@ -344,7 +330,6 @@ class CLIPTextGenerator:
             else:
                 loss_string = loss_string+'%, '+f'{losses[idx_p]}'
             
-        # print('sentiment loss: ',loss_string)
         return sentiment_loss, losses
 
 
@@ -380,6 +365,7 @@ class CLIPTextGenerator:
             
             loss += ce_loss.sum()
             
+            # SENTIMENT: adding the sentiment component
             if self.sentiment_type!='none':
                 sentiment_loss, sentiment_losses = self.get_sentiment_loss(probs, context_tokens,self.sentiment_type)
                 loss += self.sentiment_scale * sentiment_loss            

@@ -14,7 +14,7 @@ def get_args():
     parser.add_argument("--lm_model", type=str, default="gpt-2", help="gpt-2 or gpt-neo")
     parser.add_argument("--clip_checkpoints", type=str, default="./clip_checkpoints", help="path to CLIP")
     parser.add_argument("--target_seq_length", type=int, default=15)
-    parser.add_argument("--cond_text", type=str, default="Image of a")#danirla removed
+    parser.add_argument("--cond_text", type=str, default="Image of a")
     #parser.add_argument("--cond_text", type=str, default="")
     parser.add_argument("--reset_context_delta", action="store_true",
                         help="Should we reset the context at each token gen")
@@ -49,10 +49,11 @@ def get_args():
 
     return args
 
-def run(args, img_path,sentiment_type,log_file,final_log_file, sentiment_scale):
-    text_generator = CLIPTextGenerator(log_file,**vars(args))
+def run(args, img_path,sentiment_type, sentiment_scale):
+    text_generator = CLIPTextGenerator(**vars(args))
 
     image_features = text_generator.get_img_feature([img_path], None)
+    # SENTIMENT: added scale parameter
     captions = text_generator.run(image_features, args.cond_text, beam_size=args.beam_size,sentiment_type=sentiment_type,sentiment_scale=sentiment_scale)
 
     encoded_captions = [text_generator.clip.encode_text(clip.tokenize(c).to(text_generator.device)) for c in captions]
@@ -78,7 +79,7 @@ def run_arithmetic(args, imgs_path, img_weights):
     print(captions)
     print('best clip:', args.cond_text + captions[best_clip_idx])
 
-
+# SENTIMENT: writing results to file
 def write_results(img_dict):
     with open('results.csv', 'w') as results_file:
         writer = csv.writer(results_file)
@@ -92,10 +93,10 @@ def write_results(img_dict):
                 writer.writerow(cur_row)
                 writer.writerow([])
 
+# SENTIMENT: running the model for each image, sentiment and sentiment-scale
 if __name__ == "__main__":
     args = get_args()
-    log_file = 'log.txt'
-    final_log_file = 'final_results_log.txt'
+ 
     img_path_list = range(45)
     sentiment_list = ['negative','positive','neutral', 'none']
     sentiment_scale_list = [2.0, 1.5, 1.0, 0.5, 0.1]
@@ -117,7 +118,7 @@ if __name__ == "__main__":
                 print(f'~~~~~~~~\n{dt_string} | Work on img path: {args.caption_img_path} with ***{sentiment_type}***  sentiment and sentiment scale=***{sentiment_scale}***.\n~~~~~~~~')
 
                 if args.run_type == 'caption':
-                    run(args, args.caption_img_path, sentiment_type, log_file, final_log_file, sentiment_scale)
+                    run(args, args.caption_img_path, sentiment_type, sentiment_scale)
                     write_results(img_dict)
                 elif args.run_type == 'arithmetics':
                     args.arithmetics_weights = [float(x) for x in args.arithmetics_weights]
