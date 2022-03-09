@@ -266,7 +266,7 @@ dependencies:
     - box2d-py==2.3.8
     - cloudpickle==2.0.0
     - datasets==1.18.0
-    - de-core-news-sm==2.3.0
+    #- de-core-news-sm==2.3.0
     - dill==0.3.4
     - filelock==3.4.2
     - frozenlist==1.2.0
