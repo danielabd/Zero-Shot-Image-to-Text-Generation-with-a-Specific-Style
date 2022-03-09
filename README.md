@@ -7,8 +7,7 @@
 
 ### Set up environment:
 ```bash
-$ conda env update -f environment.yml
-$ conda activate zeroshot
+$ ./setup.sh
 ```
 
 ### Run model:
