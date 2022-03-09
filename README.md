@@ -16,3 +16,5 @@ $ conda activate zeroshot
 ```bash
 $ python run.py --reset_context_delta
 ```
+### Results: 
+See results in results.csv
