@@ -10,7 +10,7 @@ variety successful captions of variety images according to the desired sentiment
 ![](git_images/3_exampls.png)  
   
 The Effect of the weight of the sentiment loss on the Captioning with positive sentiment:  
-![0.25](git_images/lambda_ex.png)  
+![width=0.25](git_images/lambda_ex.png)  
 as λ is larger the description in the desired sentiment perspective is stronger but the coherence of the generated sentence is decreased.
 
 ## Usage
