@@ -27,6 +27,7 @@ For example, installing with `pip3` for Linux and CUDA 11 looks like
 
 
 ### Run model:
+The code will run on images in the "imgs" folder.
 ```bash
 $ python run.py --reset_context_delta
 ```
